@@ -464,6 +464,7 @@ GameObject:
   - component: {fileID: 361847096}
   - component: {fileID: 361847097}
   - component: {fileID: 361847098}
+  - component: {fileID: 361847099}
   m_Layer: 0
   m_Name: OrbitManager
   m_TagString: Untagged
@@ -528,6 +529,19 @@ MonoBehaviour:
   FollowSpeed: 10
   Target: {fileID: 765044053}
   targetZPostition: 10
+--- !u!114 &361847099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361847094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce75140e26bb0a43a4726ca8236ccab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerCountDown: 5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,8 +1227,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Planet
   maxDistance: 100
-  startingMass: 1
   initialVelocity: {x: 0, y: 0}
+  onOrbit: 0
+  target: {fileID: 0}
 --- !u!1 &796272960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1612,7 +1627,7 @@ GameObject:
   - component: {fileID: 1350083108}
   m_Layer: 0
   m_Name: Planet
-  m_TagString: Untagged
+  m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1631,8 +1646,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Planet
   maxDistance: 100
-  startingMass: 1
   initialVelocity: {x: 0, y: 0}
+  onOrbit: 0
+  target: {fileID: 0}
 --- !u!50 &1350083104
 Rigidbody2D:
   serializedVersion: 4

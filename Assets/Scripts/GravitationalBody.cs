@@ -9,13 +9,19 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class GravitationalBody : MonoBehaviour
 {
-    public string name = "Planet";
+    public string name = "";
+
     public float maxDistance;
-    public float startingMass;
 
+    private float startingMass;
+    public float StartingMass // for transformations
+    {
+        get { return startingMass; }
+        set { startingMass = value; } // here need to check if its alot mass so object can transform to the next stage
+    }
 
-    private int imaginaryMass;
-    public int ImaginaryMass // for transformations
+    private float imaginaryMass;
+    public float ImaginaryMass // for transformations
     {
         get { return imaginaryMass; }
         set { imaginaryMass = value; } // here need to check if its alot mass so object can transform to the next stage
@@ -28,16 +34,24 @@ public class GravitationalBody : MonoBehaviour
     //I use a static list of bodies so that we don't need to Find them every frame
     static List<Rigidbody2D> attractableBodies = new List<Rigidbody2D>();
 
-
+    public bool onOrbit = false;
+    public Transform target;
 
     void Start()
     {
-        this.name = "Planet";
-        if (this.tag == "Planet")
-            this.startingMass = Constants.PlanetsStartingMass;
+        //this.name = "Planet";
+        
+        if (this.name == "Planet" || this.tag == "Planet" || this.tag == "Player")
+        {
+            this.StartingMass = Constants.PlanetsStartingMass;
+            this.ImaginaryMass = Constants.PlanetCriticalMass;
+        }
 
-        else if (this.tag == "Asteroid")
-            this.startingMass = Constants.AsteroidStartingMass;
+        if (this.name == "Asteroid" || this.tag == "Asteroid")
+        {
+            this.StartingMass = Constants.AsteroidStartingMass;
+
+        }
 
         this.maxDistance = Constants.MaxGravitationalDistance;
 
@@ -58,7 +72,7 @@ public class GravitationalBody : MonoBehaviour
 
     void SetupRigidbody2D()
     {
-        if (this.tag != "Player")
+        if (this.tag != "Player" )
         {
             this.gameObject.AddComponent<Rigidbody2D>();
         }
@@ -68,7 +82,7 @@ public class GravitationalBody : MonoBehaviour
         rb.drag = 0f;
         rb.angularDrag = 0f;
         
-        rb.mass = startingMass;
+        rb.mass = StartingMass;
         rb.velocity = initialVelocity;
 
         
@@ -92,31 +106,46 @@ public class GravitationalBody : MonoBehaviour
 
     void SetupMeshRenderer() {
         this.gameObject.AddComponent<MeshRenderer>();
-        this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(1f, 1f, 1f, 1f, 1f, 1f);
         
     }
 
     void FixedUpdate()
     {
-
-        foreach (Rigidbody2D otherBody in attractableBodies)
+        if (!onOrbit) //если не на орбите - физика работает в нормальном режиме
         {
-
-            if (otherBody == null)
-                continue;
-
-            //We arn't going to add a gravitational pull to our own body
-            else if (otherBody == rb)
-                continue;
-            else
+            foreach (Rigidbody2D otherBody in attractableBodies)
             {
-                
+
+                if (otherBody == null)
+                    continue;
+
+                //We arn't going to add a gravitational pull to our own body
+                else if (otherBody == rb)
+                    continue;
+                else
+                {
+
+                }
+
+
+                // first, it was without any gravity power. But movements were really slow
+                otherBody.AddForce(Constants.GravityPower * DetermineGravitationalForce(otherBody));
+
             }
+        }
+        else
+        {
+            Vector3 relativePos = (target.position + new Vector3(0, 1.5f, 0)) - transform.position;
+            Quaternion rotation = Quaternion.LookRotation(relativePos);
 
-            
-            // first, it was without any gravity power. But movements were really slow
-            otherBody.AddForce(Constants.GravityPower * DetermineGravitationalForce(otherBody));
+            Quaternion current = transform.localRotation;
 
+            transform.localRotation = Quaternion.Slerp(current, rotation, Time.deltaTime);
+            transform.Translate(0, 0, 3 * Time.deltaTime);
+
+            //rb.mass = 0; // обнуляем массу чтобы наш объект не тянуло в сторону орбитального
+            //attractableBodies.Remove(this.rb);
         }
 
     }
@@ -155,11 +184,14 @@ public class GravitationalBody : MonoBehaviour
         return "error";
 
     }
+
+    /// <summary>
+    /// get object movement vector
+    /// </summary>
+    /// <returns>Vector3 movement vector</returns>
     public Vector3 GetMovementVector()
     {
         return rb.velocity;
-        
-
     }
 
 

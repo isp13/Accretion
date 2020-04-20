@@ -19,7 +19,7 @@ public static class Constants
 
     public static int MaxGravitationalDistance = 50;
 
-    public static int PlanetsStartingMass = 1;
+    public static int PlanetsStartingMass = 2;
     public static float AsteroidStartingMass = 0.5f;
 
     public static int LowerSecondsGenPlanet = 2; // нижняя граница в секундах в промежутке генерирования планет
