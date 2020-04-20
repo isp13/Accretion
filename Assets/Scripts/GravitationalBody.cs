@@ -34,6 +34,8 @@ public class GravitationalBody : MonoBehaviour
     //I use a static list of bodies so that we don't need to Find them every frame
     static List<Rigidbody2D> attractableBodies = new List<Rigidbody2D>();
 
+    Random rnd = new Random();
+
     public bool onOrbit = false;
     public Transform target;
 
@@ -144,6 +146,8 @@ public class GravitationalBody : MonoBehaviour
             transform.localRotation = Quaternion.Slerp(current, rotation, Time.deltaTime);
             transform.Translate(0, 0, 3 * Time.deltaTime);
 
+            
+
             //rb.mass = 0; // обнуляем массу чтобы наш объект не тянуло в сторону орбитального
             //attractableBodies.Remove(this.rb);
         }
@@ -166,6 +170,21 @@ public class GravitationalBody : MonoBehaviour
         return gravitationalForce;
 
     }
+
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        // если наш объект больше другого на две позиции - увеличение массы возможно даже врезавшись
+        if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name] + 1)
+        {
+            Destroy(coll.gameObject);
+            //this.GetComponent<healthScript>().health -= 1;
+        }
+        else
+        { 
+        }
+    }
+
 
     public string ShareObjectData(string option)
     {

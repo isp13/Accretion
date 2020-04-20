@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour
 {
     List<string> prefabsFolderPlanets = new List<string>();
     List<string> prefabsFolderAsteroids = new List<string>();
+    public static List<string> ColorMaterials = new List<string>();
 
     public string genType = "Asteroid";
     private int randomHash;
@@ -47,6 +48,18 @@ public class Spawner : MonoBehaviour
             if (!dirFile.Contains(".meta"))
                 prefabsFolderAsteroids.Add(dirFile);
         }
+
+        foreach (string dirFile in Directory.GetDirectories(Constants.ColorfulMaterialsFolder))
+        {
+            foreach (string dirFile2 in Directory.GetDirectories(dirFile) )
+            {
+                foreach (string fileName in Directory.GetFiles(dirFile2))
+                {
+                    if (!fileName.Contains(".meta"))
+                        ColorMaterials.Add(fileName);
+                }
+            }
+        }
     }
 
     public void Spawn()
@@ -70,6 +83,7 @@ public class Spawner : MonoBehaviour
         var newplanet = Instantiate(planetPrefab, Pos, this.transform.rotation) as GameObject;
         newplanet.tag = "Planet";
         newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "Planet";
         newplanet.transform.localScale *= Constants.PlanetScale;
 
         //newplanet.AddComponent<Rotatator>();
@@ -85,7 +99,14 @@ public class Spawner : MonoBehaviour
         var newplanet = Instantiate(asteroidPrefab, Pos, this.transform.rotation) as GameObject;
         newplanet.tag = "Asteroid";
         newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "Asteroid";
         newplanet.transform.localScale *= Constants.AsteroidScale;
+
+        string folder = Spawner.ColorMaterials[Random.Range(0, Spawner.ColorMaterials.Count)];
+        Debug.Log(folder);
+        Material[] materials = new Material[] { Resources.Load(folder, typeof(Material)) as Material  };
+        newplanet.GetComponent<MeshRenderer>().materials = materials;
+        //newplanet.GetComponent<GravitationalBody>().StartingMass = 
     }
 }
 
