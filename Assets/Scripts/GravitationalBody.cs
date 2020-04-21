@@ -108,7 +108,7 @@ public class GravitationalBody : MonoBehaviour
 
     void SetupMeshRenderer() {
         this.gameObject.AddComponent<MeshRenderer>();
-        this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(1f, 1f, 1f, 1f, 1f, 1f);
+       // this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(1f, 1f, 1f, 1f, 1f, 1f);
         
     }
 
@@ -138,6 +138,9 @@ public class GravitationalBody : MonoBehaviour
         }
         else
         {
+            
+
+
             Vector3 relativePos = (target.position + new Vector3(0, 1.5f, 0)) - transform.position;
             Quaternion rotation = Quaternion.LookRotation(relativePos);
 

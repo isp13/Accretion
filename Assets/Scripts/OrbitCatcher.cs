@@ -43,6 +43,7 @@ public class OrbitCatcher : MonoBehaviour
             {
                 other.GetComponent<GravitationalBody>().target = this.transform;
                 other.GetComponent<GravitationalBody>().onOrbit = true;
+                other.GetComponent<TrailRenderer>().enabled = false;
                 timerCountDown = 5;
             }
 
@@ -56,6 +57,7 @@ public class OrbitCatcher : MonoBehaviour
             Debug.Log("object Exited");
             isPlayerColliding = false;
             other.GetComponent<GravitationalBody>().onOrbit = false;
+            other.GetComponent<TrailRenderer>().enabled = true;
         }
     }
 }

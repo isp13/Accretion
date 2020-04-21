@@ -38,7 +38,7 @@ public class Events : MonoBehaviour
     }
     public static void StartSpawning() {
         Debug.Log("started spawning");
-        GameObject.Find("AsteroidGenerator").GetComponent<Spawner>().Spawn();
+        GameObject.Find("RandomObjectsGenerator").GetComponent<Spawner>().Spawn();
     }
 }
 
