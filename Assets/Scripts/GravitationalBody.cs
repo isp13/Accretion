@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class GravitationalBody : MonoBehaviour
@@ -34,13 +35,14 @@ public class GravitationalBody : MonoBehaviour
     //I use a static list of bodies so that we don't need to Find them every frame
     static List<Rigidbody2D> attractableBodies = new List<Rigidbody2D>();
 
-    Random rnd = new Random();
+    System.Random rnd = new System.Random();
 
     public bool onOrbit = false;
     public Transform target;
 
     void Start()
     {
+        
         //this.name = "Planet";
         
         if (this.name == "Planet" || this.tag == "Planet" || this.tag == "Player")
@@ -52,6 +54,7 @@ public class GravitationalBody : MonoBehaviour
         if (this.name == "Asteroid" || this.tag == "Asteroid")
         {
             this.StartingMass = Constants.AsteroidStartingMass;
+            this.GetComponent<Rigidbody2D>().AddForce(Constants.GravityPower * new Vector3(rnd.Next(), rnd.Next(), rnd.Next()).normalized);
 
         }
 
@@ -65,7 +68,7 @@ public class GravitationalBody : MonoBehaviour
         SetupMeshRenderer();
         SetupTrailRenderer();
 
-
+        
         
 
         //Add this gravitational body to the list, so that all other gravitational bodies can be effected by it
@@ -87,8 +90,10 @@ public class GravitationalBody : MonoBehaviour
         rb.mass = StartingMass;
         rb.velocity = initialVelocity;
 
+
         
     }
+
 
     void SetupColliders()
     {
@@ -108,8 +113,11 @@ public class GravitationalBody : MonoBehaviour
 
     void SetupMeshRenderer() {
         this.gameObject.AddComponent<MeshRenderer>();
-       // this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(1f, 1f, 1f, 1f, 1f, 1f);
-        
+        //this.GetComponent<MeshRenderer>().material = new UnityEngine.Material[1];
+        //this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(1f, 1f, 1f, 1f, 1f, 1f);
+        if (name == "Asteroid")
+            this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
+
     }
 
     void FixedUpdate()
@@ -132,7 +140,8 @@ public class GravitationalBody : MonoBehaviour
 
 
                 // first, it was without any gravity power. But movements were really slow
-                otherBody.AddForce(Constants.GravityPower * DetermineGravitationalForce(otherBody));
+                if (this.name != "Asteroid" || this.tag != "Asteroid")
+                    otherBody.AddForce(Constants.GravityPower * DetermineGravitationalForce(otherBody));
 
             }
         }
@@ -181,10 +190,26 @@ public class GravitationalBody : MonoBehaviour
         if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name] + 1)
         {
             Destroy(coll.gameObject);
-            //this.GetComponent<healthScript>().health -= 1;
+            this.startingMass += 1;
+
+            if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
+            {
+                // transform to new object
+                Debug.Log("NEED TO TRANSFORM");
+
+                // номер следующего объекта из словаря
+                int nextRank = Constants.HierarchyDict[name] + 1 ;
+
+                this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
+                this.StartingMass = Constants.HierarchyMinMass[name];
+                this.ImaginaryMass = Constants.HierarchyMaxMass[name];
+                //
+
+            }
         }
-        else
+        else if (Constants.HierarchyDict[name] == Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name])
         { 
+
         }
     }
 
@@ -196,7 +221,7 @@ public class GravitationalBody : MonoBehaviour
             case "name":
                 return name.ToString();
             case "mass":
-                return rb.mass.ToString();
+                return StartingMass.ToString();
             case "coords":
                 return rb.position.x.ToString() + "," + rb.position.y.ToString();
             case "vector":

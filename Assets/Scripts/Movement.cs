@@ -17,11 +17,10 @@ public class Movement : MonoBehaviour
     }
 
     // Next update in second
-    private int nextUpdate = 10;
+    private int nextUpdate = 2;
     // Update is called once per frame
     void Update()
     {
-
         bool somethingWasPressed = false; // checking if movement was made this frame
         
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -62,10 +61,8 @@ public class Movement : MonoBehaviour
             if (Time.time >= nextUpdate)
             {
                 int tmp = Random.Range(Constants.LowerSecondsGenPlanet, Constants.UpperSecondsGenPlanet);
-                Debug.Log(Time.time + ">=" + nextUpdate);
                 // Change the next update (current second+1)
                 nextUpdate = Mathf.FloorToInt(Time.time) + tmp;
-                Debug.Log("NEXT UPDATE IN " + tmp.ToString());
                 // Call your fonction
                 Events.InvokeNotifyMovement();
             }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rotatator : MonoBehaviour {
-	[SerializeField] Vector3 rotation;
-	[SerializeField] Transform meshObject = null;
-	[SerializeField] float rotationSpeed = 0;
-	[SerializeField] bool randomize;
+	Vector3 rotation;
+	Transform meshObject = null;
+	float rotationSpeed;
+	bool randomize = true;
 	
 	public bool Randomize 
 	
@@ -16,8 +16,8 @@ public class Rotatator : MonoBehaviour {
 		}
 	}
 	
-	[SerializeField] float maxSpeed;
-	[SerializeField] float minSpeed;
+	float maxSpeed;
+	float minSpeed;
 
 	// Use this for initialization
 	void Start () 
@@ -27,20 +27,26 @@ public class Rotatator : MonoBehaviour {
 		if(meshObject == null) 
 		
 		{
-			meshObject = transform.Find("planet"); 
+			meshObject = this.gameObject.transform;
+			Debug.Log(meshObject);
 			if (meshObject == null)
-				meshObject = transform.Find("w2"); 
+				meshObject = transform.Find(this.name);
 		}
 		
 		
-		if(randomize) 
+
 		
-		{
-			rotation = new Vector3(RandFloat(), RandFloat(), RandFloat());
-			rotationSpeed = Random.Range(minSpeed,maxSpeed);
-		}
+		
 	}
-	
+	public void Randomize_rotation()
+	{
+
+		rotation = new Vector3(RandFloat(), RandFloat(), RandFloat());
+		minSpeed = Constants.minSpeed;
+		maxSpeed = Constants.maxSpeed;
+		rotationSpeed = Random.Range(minSpeed, maxSpeed);
+	}
+
 	float RandFloat() 
 	
 	{
@@ -51,7 +57,11 @@ public class Rotatator : MonoBehaviour {
 	void FixedUpdate() 
 	
 	{
-        if(meshObject != null)
-		    meshObject.Rotate(rotation, rotationSpeed * Time.deltaTime);
+		if (meshObject != null)
+			meshObject.Rotate(rotation, rotationSpeed * Time.deltaTime);
+		else 
+		{
+			Debug.Log("Mesh is nil");
+		}
 	}
 }

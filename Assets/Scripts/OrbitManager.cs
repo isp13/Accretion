@@ -26,6 +26,7 @@ public class OrbitManager : MonoBehaviour
         //Debug.Log("ONTRIGGER ENTER");
         StartCoroutine("FlashesBeforeSomething");
         GameObject.Find("OrbitRenderer").GetComponent<LineRenderer>().enabled = true;
+        
     }
 
     //When the Primitive exits the collision, it will change Color
@@ -33,7 +34,9 @@ public class OrbitManager : MonoBehaviour
     {
         //Debug.Log("ONTRIGGER EXIT");
         //StartCoroutine("FlashesBeforeSomething");
+
         GameObject.Find("OrbitRenderer").GetComponent<LineRenderer>().enabled = false;
+        
     }
 
     IEnumerator FlashesBeforeSomething()

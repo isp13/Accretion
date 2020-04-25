@@ -62,39 +62,55 @@ public class Spawner : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// берем вектор-направление игрока и спавним в том направлении
+    /// </summary>
     public void Spawn()
     {
-       Vector3 vectorToSpawn = GameObject.Find("Player").GetComponent<GravitationalBody>().GetMovementVector().normalized + (rnd.Next(0,2) == 1 ? -1: 1) *  new Vector3(rnd.Next(), rnd.Next(), 0).normalized / 2;
+        GameObject player = GameObject.Find("Player");
+        Vector3 vectorToSpawn = player.GetComponent<GravitationalBody>().GetMovementVector().normalized + (rnd.Next(0,2) == 1 ? -1: 1) *  new Vector3(rnd.Next(), rnd.Next(), 0).normalized / 2;
 
-        if (rnd.Next(0,2) == 0)
-            SpawnAsteroid(vectorToSpawn);
-        else SpawnPlanets(vectorToSpawn);
+        if (System.Math.Pow(vectorToSpawn.x - player.transform.position.x, 2) + System.Math.Pow(vectorToSpawn.y - player.transform.position.y, 2) >= System.Math.Pow(Constants.DistanceToGenerateObjects, 2))
+        {
+            if (rnd.Next(0, 2) == 0)
+                SpawnAsteroid(vectorToSpawn);
+            else SpawnPlanets(vectorToSpawn);
+        }
+        
     }
 
     void SpawnPlanets(Vector3 vc) 
     {
 
-        //Debug.Log(prefabsFolder[0]);
-        // Set up instantiate
+        // получаем рандомную планету из префабов
         string newplanetName = prefabsFolderPlanets[rnd.Next(0, prefabsFolderPlanets.Count)];
-        Debug.Log(newplanetName);
         Object planetPrefab = AssetDatabase.LoadAssetAtPath(newplanetName, typeof(GameObject));
+
+        // позиция игрока
         var Pos = GameObject.Find("Player").GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+
+        // инициализируем планету в игре
         var newplanet = Instantiate(planetPrefab, Pos, this.transform.rotation) as GameObject;
         newplanet.tag = "Planet";
-        newplanet.AddComponent<GravitationalBody>();
-        newplanet.GetComponent<GravitationalBody>().name = "Planet";
+
+        // добавляем гравитацию ей 
+        var gvBody = newplanet.AddComponent<GravitationalBody>();
+        gvBody.name = "Planet";
+
+        // меняем ее размер, чтобы он соответствовал ее типу
         newplanet.transform.localScale *= Constants.PlanetScale;
 
-        //newplanet.AddComponent<Rotatator>();
+        var rotator = newplanet.AddComponent<Rotatator>();
+        rotator.Randomize_rotation();
+
 
     }
 
     void SpawnAsteroid(Vector3 vc)
     {
         Object asteroidPrefab = AssetDatabase.LoadAssetAtPath(prefabsFolderAsteroids[rnd.Next(0, prefabsFolderAsteroids.Count)], typeof(GameObject));
-        Debug.Log(this.transform.position);
-        Debug.Log(vc);
+
         var Pos = GameObject.Find("Player").GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(asteroidPrefab, Pos, this.transform.rotation) as GameObject;
         newplanet.tag = "Asteroid";
@@ -105,6 +121,7 @@ public class Spawner : MonoBehaviour
         string folder = Spawner.ColorMaterials[Random.Range(0, Spawner.ColorMaterials.Count)];
         Debug.Log(folder);
         Material[] materials = new Material[] { Resources.Load(folder, typeof(Material)) as Material  };
+        
         newplanet.GetComponent<MeshRenderer>().materials = materials;
         //newplanet.GetComponent<GravitationalBody>().StartingMass = 
     }
