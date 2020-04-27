@@ -6,10 +6,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using UnityEditor;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class GravitationalBody : MonoBehaviour
 {
+    private PrefabsStorage prefabs;
+
     public string name = "";
 
     public float maxDistance;
@@ -42,20 +45,27 @@ public class GravitationalBody : MonoBehaviour
 
     void Start()
     {
-        
+
         //this.name = "Planet";
-        
-        if (this.name == "Planet" || this.tag == "Planet" || this.tag == "Player")
-        {
-            this.StartingMass = Constants.PlanetsStartingMass;
-            this.ImaginaryMass = Constants.PlanetCriticalMass;
-        }
+        prefabs = GameObject.Find("PrefabStorage").GetComponent<PrefabsStorage>();
+
+
 
         if (this.name == "Asteroid" || this.tag == "Asteroid")
         {
             this.StartingMass = Constants.AsteroidStartingMass;
             this.GetComponent<Rigidbody2D>().AddForce(Constants.GravityPower * new Vector3(rnd.Next(), rnd.Next(), rnd.Next()).normalized);
 
+        }
+        if (this.name == "DwarfPlanet" || this.tag == "DwarfPlanet")
+        {
+            this.StartingMass = Constants.DwarfPlanetsStartingMass;
+            this.ImaginaryMass = Constants.DwarfPlanetCriticalMass;
+        }
+        if (this.name == "Planet" || this.tag == "Planet")
+        {
+            this.StartingMass = Constants.PlanetsStartingMass;
+            this.ImaginaryMass = Constants.PlanetCriticalMass;
         }
 
         this.maxDistance = Constants.MaxGravitationalDistance;
@@ -113,11 +123,6 @@ public class GravitationalBody : MonoBehaviour
 
     void SetupMeshRenderer() {
         this.gameObject.AddComponent<MeshRenderer>();
-        //this.GetComponent<MeshRenderer>().material = new UnityEngine.Material[1];
-        //this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(1f, 1f, 1f, 1f, 1f, 1f);
-        if (name == "Asteroid")
-            this.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
-
     }
 
     void FixedUpdate()
@@ -186,8 +191,9 @@ public class GravitationalBody : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        // если наш объект больше другого на две позиции - увеличение массы возможно даже врезавшись
-        if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name] + 1)
+        
+        // если наш объект больше другого на две позиции - увеличение массы возможно даже врезавшись. ДОБАВИТТЬ СПРАВА ПЛЮС 1
+        if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name])
         {
             Destroy(coll.gameObject);
             this.startingMass += 1;
@@ -201,10 +207,20 @@ public class GravitationalBody : MonoBehaviour
                 int nextRank = Constants.HierarchyDict[name] + 1 ;
 
                 this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
-                this.StartingMass = Constants.HierarchyMinMass[name];
-                this.ImaginaryMass = Constants.HierarchyMaxMass[name];
-                //
 
+                // изменение мешей, массы и тп при трансформации
+
+                if (name == "DwarfPlanet")
+                    Retransform_DwarfPlanet();
+
+                else if (name == "Planet")
+                    Retransform_Planet();
+
+                else if (name == "DwarfStar")
+                {
+                    Debug.Log("################################### DWARF");
+                    Retransform_DwarfStar();
+                }
             }
         }
         else if (Constants.HierarchyDict[name] == Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name])
@@ -240,6 +256,49 @@ public class GravitationalBody : MonoBehaviour
     {
         return rb.velocity;
     }
+
+
+    /// <summary>
+    /// Функция для превращения модели объекта в модель карликовой планеты
+    /// </summary>
+    public void Retransform_DwarfPlanet()
+    {
+        // получаем рандомную планету из префабов
+        Object planetPrefab = prefabs.planets[rnd.Next(0, prefabs.planets.Length)] as GameObject;
+        GameObject randomOne = Instantiate(planetPrefab, new Vector3(1,1,1) * 10000, this.transform.rotation) as GameObject;
+        this.gameObject.GetComponent<MeshFilter>().mesh = randomOne.GetComponent<MeshFilter>().mesh;
+        this.gameObject.GetComponent<MeshRenderer>().materials = randomOne.GetComponent<MeshRenderer>().materials;
+
+        this.StartingMass = Constants.HierarchyMinMass[name];
+        this.ImaginaryMass = Constants.HierarchyMaxMass[name];
+    }
+
+    public void Retransform_Planet()
+    {
+        // получаем рандомную планету из префабов
+        Object planetPrefab = prefabs.planets[rnd.Next(0, prefabs.planets.Length)] as GameObject;
+        GameObject randomOne = Instantiate(planetPrefab, new Vector3(1, 1, 1) * 10000, this.transform.rotation) as GameObject;
+        this.gameObject.GetComponent<MeshFilter>().mesh = randomOne.GetComponent<MeshFilter>().mesh;
+        this.gameObject.GetComponent<MeshRenderer>().materials = randomOne.GetComponent<MeshRenderer>().materials;
+
+        this.StartingMass = Constants.HierarchyMinMass[name];
+        this.ImaginaryMass = Constants.HierarchyMaxMass[name];
+    }
+
+    public void Retransform_DwarfStar()
+    {
+        // получаем рандомную звезду из префабов
+        Object planetPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+        GameObject randomOne = Instantiate(planetPrefab, new Vector3(1, 1, 1) * 10000, this.transform.rotation) as GameObject;
+
+        this.gameObject.GetComponent<MeshFilter>().mesh = randomOne.GetComponent<MeshFilter>().mesh;
+        this.gameObject.GetComponent<MeshRenderer>().materials = randomOne.GetComponent<MeshRenderer>().materials;
+
+        this.StartingMass = Constants.HierarchyMinMass[name];
+        this.ImaginaryMass = Constants.HierarchyMaxMass[name];
+    }
+
+
 
 
 }

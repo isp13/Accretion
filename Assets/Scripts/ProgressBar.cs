@@ -37,8 +37,6 @@ public class ProgressBar : MonoBehaviour
         //however you would set this value based on your desired display
         //eg, the loading progress, the player's health, or whatever.
 
-        Debug.Log(playersgravity.StartingMass);
-        Debug.Log(playersgravity.name);
         barDisplay = playersgravity.StartingMass / Constants.HierarchyMaxMass[playersgravity.name];
         //        barDisplay = MyControlScript.staticHealth;
     }

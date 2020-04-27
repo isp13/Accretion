@@ -28,7 +28,8 @@ public static class Constants
     public static int PlanetCriticalMass = 50;
     public static int PlanetScale = 10;
 
-    public static int DwarfStarCriticalMass = 200000;
+    public static int DwarfStarStartingMass = 50;
+    public static int DwarfStarCriticalMass = 100;
 
 
 
@@ -47,9 +48,9 @@ public static class Constants
     public static float maxSpeed = 30;
     public static float minSpeed = 10;
 
-    public static string PlanetPrefabsFolder = "Assets/#OnePotatoKingdom_FULL/Prefabs/#Planets";
-    public static string AsteroidPrefabsFolder = "Assets/PACKS VOLS/Mobile Astre Pack vol. 1/Prefabs";
-    public static string ColorfulMaterialsFolder = "Assets/#OnePotatoKingdom_FULL/Materials/Materials/";
+    public static string ColorfulMaterialsFolder = "Assets/Resources/#OnePotatoKingdom_FULL/Materials/Materials/";
+    public static string StarsMaterialsFolder = "Assets/Stars/";
+    
 
     public static bool PlayerIsMoving = false;
 
@@ -58,7 +59,7 @@ public static class Constants
     // СЛОВАРИ НЕ ЗАПОЛНЕНЫ ДО КОНЦА
     public static Dictionary<string, int> HierarchyMinMass = new Dictionary<string, int> {
         { "Asteroid" , 0}, { "DwarfPlanet", AsteroidCriticalMass }, { "Planet", DwarfPlanetCriticalMass}, { "DwarfStar", PlanetCriticalMass},
-        { "Star", 1 }, { "Giant Star", 1 }, {"neutron  star", 1 }, {"Black hole", 1 } };
+        { "Star", DwarfStarCriticalMass }, { "Giant Star", 1 }, {"neutron  star", 1 }, {"Black hole", 1 } };
 
     public static Dictionary<string, int> HierarchyMaxMass = new Dictionary<string, int> {
         { "Asteroid" , AsteroidCriticalMass}, { "DwarfPlanet", DwarfPlanetCriticalMass }, { "Planet", PlanetCriticalMass}, { "DwarfStar", DwarfStarCriticalMass},

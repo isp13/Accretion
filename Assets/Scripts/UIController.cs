@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 public class UIController : MonoBehaviour
@@ -8,7 +9,7 @@ public class UIController : MonoBehaviour
     public Text Mass;
     public Text Vector;
     public Text Coords;
-
+    public Text nextObject;
     public GameObject player;
 
     private GravitationalBody scr;
@@ -30,6 +31,7 @@ public class UIController : MonoBehaviour
         Mass.text = "Mass: " + scr.ShareObjectData("mass");;
         Vector.text = "Vector2: <" + scr.ShareObjectData("vector") + ">" ;
         Coords.text = "Coordinates: <" + scr.ShareObjectData("coords") + ">";
+        nextObject.text = "Next: ";
     }
 
     void FetchInfoLabels() { 

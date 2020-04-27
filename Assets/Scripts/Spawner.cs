@@ -6,60 +6,39 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    List<string> prefabsFolderPlanets = new List<string>();
-    List<string> prefabsFolderAsteroids = new List<string>();
-    public static List<string> ColorMaterials = new List<string>();
 
     public string genType = "Asteroid";
     private int randomHash;
     private System.Random rnd;
     private System.DateTime lastTimeGenerated;
-    
+
+    private PrefabsStorage prefabs;
+
+    private int asteroidsCount = 0;
     // Start is called before the first frame update
     void Start()
     {
         randomHash = this.GetInstanceID();
         rnd = new System.Random(randomHash);
         lastTimeGenerated = System.DateTime.Now;
-        LoadPrefabsFolders();
 
-        
+        prefabs = GameObject.Find("PrefabStorage").GetComponent<PrefabsStorage>();
 
     }
 
     // Update is called once per frame
-    void Update()
-    { 
-    }
-
-    void LoadPrefabsFolders() 
+    void FixedUpdate()
     {
-        foreach (string dirFile in Directory.GetDirectories(Constants.PlanetPrefabsFolder))
+        
+        if (genType == "AsteroidONLY" && asteroidsCount <= 150 )
         {
-            foreach (string fileName in Directory.GetFiles(dirFile))
-            {
-                if (!fileName.Contains(".meta"))
-                    prefabsFolderPlanets.Add(fileName);
-            }
-        }
+            asteroidsCount += 1;
+            GameObject player = GameObject.Find("Player");
+            Vector3 vectorToSpawn = player.GetComponent<GravitationalBody>().GetMovementVector().normalized + (rnd.Next(0, 2) == 1 ? -1 : 1) * new Vector3(rnd.Next(), rnd.Next(), 0).normalized / 2;
 
-        foreach (string dirFile in Directory.GetFiles(Constants.AsteroidPrefabsFolder))
-        {
-            if (!dirFile.Contains(".meta"))
-                prefabsFolderAsteroids.Add(dirFile);
+            SpawnAsteroid(vectorToSpawn);
         }
-
-        foreach (string dirFile in Directory.GetDirectories(Constants.ColorfulMaterialsFolder))
-        {
-            foreach (string dirFile2 in Directory.GetDirectories(dirFile) )
-            {
-                foreach (string fileName in Directory.GetFiles(dirFile2))
-                {
-                    if (!fileName.Contains(".meta"))
-                        ColorMaterials.Add(fileName);
-                }
-            }
-        }
+        
     }
 
 
@@ -84,8 +63,8 @@ public class Spawner : MonoBehaviour
     {
 
         // получаем рандомную планету из префабов
-        string newplanetName = prefabsFolderPlanets[rnd.Next(0, prefabsFolderPlanets.Count)];
-        Object planetPrefab = AssetDatabase.LoadAssetAtPath(newplanetName, typeof(GameObject));
+        
+        Object planetPrefab = prefabs.planets[rnd.Next(0, prefabs.planets.Length)] as GameObject;
 
         // позиция игрока
         var Pos = GameObject.Find("Player").GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
@@ -109,7 +88,8 @@ public class Spawner : MonoBehaviour
 
     void SpawnAsteroid(Vector3 vc)
     {
-        Object asteroidPrefab = AssetDatabase.LoadAssetAtPath(prefabsFolderAsteroids[rnd.Next(0, prefabsFolderAsteroids.Count)], typeof(GameObject));
+
+        Object asteroidPrefab = prefabs.asteroids[rnd.Next(0, prefabs.asteroids.Length)] as GameObject;
 
         var Pos = GameObject.Find("Player").GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(asteroidPrefab, Pos, this.transform.rotation) as GameObject;
@@ -118,12 +98,9 @@ public class Spawner : MonoBehaviour
         newplanet.GetComponent<GravitationalBody>().name = "Asteroid";
         newplanet.transform.localScale *= Constants.AsteroidScale;
 
-        string folder = Spawner.ColorMaterials[Random.Range(0, Spawner.ColorMaterials.Count)];
-        Debug.Log(folder);
-        Material[] materials = new Material[] { Resources.Load(folder, typeof(Material)) as Material  };
+        Material[] materials = new Material[] { prefabs.asteroidsMaterials[rnd.Next(0, prefabs.asteroidsMaterials.Length)] };
         
         newplanet.GetComponent<MeshRenderer>().materials = materials;
-        //newplanet.GetComponent<GravitationalBody>().StartingMass = 
     }
 }
 
