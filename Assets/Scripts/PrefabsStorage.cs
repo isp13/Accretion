@@ -9,4 +9,5 @@ public class PrefabsStorage : MonoBehaviour
     [SerializeField] public GameObject[] planets;
     [SerializeField] public GameObject[] stars;
 
+    [SerializeField] public GameObject[] BlackHole;
 }

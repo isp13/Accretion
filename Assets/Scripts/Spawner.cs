@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (genType == "AsteroidONLY" && asteroidsCount <= 150 )
+        if (genType == "AsteroidONLY" && asteroidsCount <= 300 )
         {
             asteroidsCount += 1;
             GameObject player = GameObject.Find("Player");

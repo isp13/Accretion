@@ -207,7 +207,8 @@ public class GravitationalBody : MonoBehaviour
                 int nextRank = Constants.HierarchyDict[name] + 1 ;
 
                 this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
-
+                if (this.tag != "Player")
+                    this.tag = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
                 // изменение мешей, массы и тп при трансформации
 
                 if (name == "DwarfPlanet")
@@ -217,10 +218,15 @@ public class GravitationalBody : MonoBehaviour
                     Retransform_Planet();
 
                 else if (name == "DwarfStar")
-                {
-                    Debug.Log("################################### DWARF");
                     Retransform_DwarfStar();
-                }
+                else if (name == "Star")
+                    Retransform_Star();
+                else if (name == "GiantStar")
+                    Retransform_GiantStar();
+                else if (name == "NeutronStar")
+                    Retransform_NeutronStar();
+                else
+                    Retransform_BlackHole();
             }
         }
         else if (Constants.HierarchyDict[name] == Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name])
@@ -286,6 +292,58 @@ public class GravitationalBody : MonoBehaviour
     }
 
     public void Retransform_DwarfStar()
+    {
+        // получаем рандомную карликовую звезду из префабов
+        Object planetPrefab = prefabs.stars[1] as GameObject; // dark white
+        GameObject randomOne = Instantiate(planetPrefab, new Vector3(1, 1, 1) * 10000, this.transform.rotation) as GameObject;
+
+        this.gameObject.GetComponent<MeshFilter>().mesh = randomOne.GetComponent<MeshFilter>().mesh;
+        this.gameObject.GetComponent<MeshRenderer>().materials = randomOne.GetComponent<MeshRenderer>().materials;
+
+        this.StartingMass = Constants.HierarchyMinMass[name];
+        this.ImaginaryMass = Constants.HierarchyMaxMass[name];
+    }
+
+    public void Retransform_Star()
+    {
+        // получаем рандомную звезду из префабов
+        Object planetPrefab = prefabs.stars[2] as GameObject; // yellow
+        GameObject randomOne = Instantiate(planetPrefab, new Vector3(1, 1, 1) * 10000, this.transform.rotation) as GameObject;
+
+        this.gameObject.GetComponent<MeshFilter>().mesh = randomOne.GetComponent<MeshFilter>().mesh;
+        this.gameObject.GetComponent<MeshRenderer>().materials = randomOne.GetComponent<MeshRenderer>().materials;
+
+        this.StartingMass = Constants.HierarchyMinMass[name];
+        this.ImaginaryMass = Constants.HierarchyMaxMass[name];
+    }
+
+    public void Retransform_GiantStar()
+    {
+        // получаем рандомную звезду из префабов
+        Object planetPrefab = prefabs.stars[0] as GameObject; //red
+        GameObject randomOne = Instantiate(planetPrefab, new Vector3(1, 1, 1) * 10000, this.transform.rotation) as GameObject;
+
+        this.gameObject.GetComponent<MeshFilter>().mesh = randomOne.GetComponent<MeshFilter>().mesh;
+        this.gameObject.GetComponent<MeshRenderer>().materials = randomOne.GetComponent<MeshRenderer>().materials;
+
+        this.StartingMass = Constants.HierarchyMinMass[name];
+        this.ImaginaryMass = Constants.HierarchyMaxMass[name];
+    }
+
+    public void Retransform_NeutronStar()
+    {
+        // получаем рандомную звезду из префабов
+        Object planetPrefab = prefabs.stars[4] as GameObject; // blue star
+        GameObject randomOne = Instantiate(planetPrefab, new Vector3(1, 1, 1) * 10000, this.transform.rotation) as GameObject;
+
+        this.gameObject.GetComponent<MeshFilter>().mesh = randomOne.GetComponent<MeshFilter>().mesh;
+        this.gameObject.GetComponent<MeshRenderer>().materials = randomOne.GetComponent<MeshRenderer>().materials;
+
+        this.StartingMass = Constants.HierarchyMinMass[name];
+        this.ImaginaryMass = Constants.HierarchyMaxMass[name];
+    }
+
+    public void Retransform_BlackHole()
     {
         // получаем рандомную звезду из префабов
         Object planetPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
