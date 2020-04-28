@@ -145,7 +145,8 @@ public class GravitationalBody : MonoBehaviour
 
 
                 // first, it was without any gravity power. But movements were really slow
-                if (this.name != "Asteroid" || this.tag != "Asteroid")
+                // добавил второе условие, чтобы притягивал только больший по массе объект, не было взаимного притяжения
+                if ((this.name != "Asteroid" || this.tag != "Asteroid") && this.ImaginaryMass >= otherBody.GetComponent<GravitationalBody>().ImaginaryMass + 10 )
                     otherBody.AddForce(Constants.GravityPower * DetermineGravitationalForce(otherBody));
 
             }
@@ -191,9 +192,9 @@ public class GravitationalBody : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        
+
         // если наш объект больше другого на две позиции - увеличение массы возможно даже врезавшись. ДОБАВИТТЬ СПРАВА ПЛЮС 1
-        if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name])
+        if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name] + 1)
         {
             Destroy(coll.gameObject);
             this.startingMass += 1;
@@ -204,7 +205,44 @@ public class GravitationalBody : MonoBehaviour
                 Debug.Log("NEED TO TRANSFORM");
 
                 // номер следующего объекта из словаря
-                int nextRank = Constants.HierarchyDict[name] + 1 ;
+                int nextRank = Constants.HierarchyDict[name] + 1;
+
+                this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
+                if (this.tag != "Player")
+                    this.tag = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
+                // изменение мешей, массы и тп при трансформации
+
+                if (name == "DwarfPlanet")
+                    Retransform_DwarfPlanet();
+
+                else if (name == "Planet")
+                    Retransform_Planet();
+
+                else if (name == "DwarfStar")
+                    Retransform_DwarfStar();
+                else if (name == "Star")
+                    Retransform_Star();
+                else if (name == "GiantStar")
+                    Retransform_GiantStar();
+                else if (name == "NeutronStar")
+                    Retransform_NeutronStar();
+                else
+                    Retransform_BlackHole();
+            }
+        }
+        else if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name]) // если больше на одну позицию
+        {
+            //GameObject.Find("OnlyAsteroidsGenerator").GetComponent<Spawner>().SpawnAsteroidConstantPosition(this.transform.position + new Vector3((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble()));
+            Destroy(coll.gameObject);
+            this.startingMass += 1;
+
+            if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
+            {
+                // transform to new object
+                Debug.Log("NEED TO TRANSFORM");
+
+                // номер следующего объекта из словаря
+                int nextRank = Constants.HierarchyDict[name] + 1;
 
                 this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
                 if (this.tag != "Player")
@@ -230,8 +268,8 @@ public class GravitationalBody : MonoBehaviour
             }
         }
         else if (Constants.HierarchyDict[name] == Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name])
-        { 
-
+        {
+            //нужно оттолкнуть объекты
         }
     }
 
@@ -293,6 +331,9 @@ public class GravitationalBody : MonoBehaviour
 
     public void Retransform_DwarfStar()
     {
+        // тк звезда, то увеличиваем подсвевиваемость префаба
+        var cam = GameObject.Find("Main Camera").GetComponent<cakeslice.OutlineEffect>().lineIntensity = 1.3f;
+
         // получаем рандомную карликовую звезду из префабов
         Object planetPrefab = prefabs.stars[1] as GameObject; // dark white
         GameObject randomOne = Instantiate(planetPrefab, new Vector3(1, 1, 1) * 10000, this.transform.rotation) as GameObject;
@@ -346,7 +387,7 @@ public class GravitationalBody : MonoBehaviour
     public void Retransform_BlackHole()
     {
         // получаем рандомную звезду из префабов
-        Object planetPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+        Object planetPrefab = prefabs.BlackHole[0] as GameObject;
         GameObject randomOne = Instantiate(planetPrefab, new Vector3(1, 1, 1) * 10000, this.transform.rotation) as GameObject;
 
         this.gameObject.GetComponent<MeshFilter>().mesh = randomOne.GetComponent<MeshFilter>().mesh;

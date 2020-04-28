@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (genType == "AsteroidONLY" && asteroidsCount <= 300 )
+        if (genType == "AsteroidONLY" && asteroidsCount <= 150 )
         {
             asteroidsCount += 1;
             GameObject player = GameObject.Find("Player");
@@ -100,6 +100,23 @@ public class Spawner : MonoBehaviour
 
         Material[] materials = new Material[] { prefabs.asteroidsMaterials[rnd.Next(0, prefabs.asteroidsMaterials.Length)] };
         
+        newplanet.GetComponent<MeshRenderer>().materials = materials;
+    }
+
+    public void SpawnAsteroidConstantPosition(Vector3 vc)
+    {
+
+        Object asteroidPrefab = prefabs.asteroids[rnd.Next(0, prefabs.asteroids.Length)] as GameObject;
+
+       
+        var newplanet = Instantiate(asteroidPrefab, vc, this.transform.rotation) as GameObject;
+        newplanet.tag = "Asteroid";
+        newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "Asteroid";
+        newplanet.transform.localScale *= Constants.AsteroidScale;
+
+        Material[] materials = new Material[] { prefabs.asteroidsMaterials[rnd.Next(0, prefabs.asteroidsMaterials.Length)] };
+
         newplanet.GetComponent<MeshRenderer>().materials = materials;
     }
 }
