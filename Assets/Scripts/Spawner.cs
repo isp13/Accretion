@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (genType == "AsteroidONLY" && asteroidsCount <= 150 )
+        if (genType == "AsteroidONLY" && asteroidsCount <= 70 )
         {
             asteroidsCount += 1;
             GameObject player = GameObject.Find("Player");
@@ -49,6 +49,7 @@ public class Spawner : MonoBehaviour
     {
         GameObject player = GameObject.Find("Player");
         Vector3 vectorToSpawn = player.GetComponent<GravitationalBody>().GetMovementVector().normalized + (rnd.Next(0,2) == 1 ? -1: 1) *  new Vector3(rnd.Next(), rnd.Next(), 0).normalized / 2;
+
 
         if (System.Math.Pow(vectorToSpawn.x - player.transform.position.x, 2) + System.Math.Pow(vectorToSpawn.y - player.transform.position.y, 2) >= System.Math.Pow(Constants.DistanceToGenerateObjects, 2))
         {

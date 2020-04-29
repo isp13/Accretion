@@ -41,7 +41,9 @@ public class GravitationalBody : MonoBehaviour
     System.Random rnd = new System.Random();
 
     public bool onOrbit = false;
+    
     public Transform target;
+
 
     void Start()
     {
@@ -145,8 +147,8 @@ public class GravitationalBody : MonoBehaviour
 
 
                 // first, it was without any gravity power. But movements were really slow
-                // добавил второе условие, чтобы притягивал только больший по массе объект, не было взаимного притяжения
-                if ((this.name != "Asteroid" || this.tag != "Asteroid") && this.ImaginaryMass >= otherBody.GetComponent<GravitationalBody>().ImaginaryMass + 10 )
+                // добавил второе условие, чтобы притягивал только больший по рангу, не было взаимного притяжения
+                if ((this.name != "Asteroid" || this.tag != "Asteroid") && Constants.HierarchyDict[this.name] > Constants.HierarchyDict[otherBody.GetComponent<GravitationalBody>().name] )
                     otherBody.AddForce(Constants.GravityPower * DetermineGravitationalForce(otherBody));
 
             }
@@ -187,6 +189,22 @@ public class GravitationalBody : MonoBehaviour
 
         return gravitationalForce;
 
+    }
+
+
+    // если объект захвачен на орбиту, предоставить возможность его "съесть по нажатии на него"
+    void OnMouseDown()
+    {
+        Debug.Log("CLICK");
+        // this object was clicked - do something
+        if (onOrbit)
+        {
+            Debug.Log("DESROYING");
+            // увеличиваем массу центра системы из космических объектов кода съели
+            GameObject.Find("Player").GetComponent<GravitationalBody>().StartingMass += 1;
+            Destroy(this.gameObject);
+            
+        }
     }
 
 

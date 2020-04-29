@@ -57,6 +57,7 @@ public class OrbitCatcher : MonoBehaviour
             Debug.Log("object Exited");
             isPlayerColliding = false;
             other.GetComponent<GravitationalBody>().onOrbit = false;
+
             other.GetComponent<TrailRenderer>().enabled = true;
         }
     }

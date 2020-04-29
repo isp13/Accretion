@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Constants
 {
-    public static float GravityPower = 70; // default is 27
+    public static float GravityPower = 140; // default is 27 // ,было 70 // но тк изменилась гравитация, поднялв  два раза
 
     public static Dictionary<string, int> HierarchyDict = new Dictionary<string, int> { 
         { "Asteroid" , 0}, { "DwarfPlanet", 1 }, { "Planet", 2 }, { "DwarfStar", 3 },
