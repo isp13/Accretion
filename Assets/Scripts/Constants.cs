@@ -11,8 +11,8 @@ public static class Constants
         { "Star", 4 }, { "GiantStar", 5 }, {"NeutronStar", 6 }, {"BlackHole", 6 } };
 
 
-    public static string PlayersNextObject = "DwarfPlanet";
-
+    public static string PlayersNextObject = "Dwarf Planet";
+    
     // Asteroids stats
     public static float AsteroidStartingMass = 1f;
     public static int AsteroidCriticalMass = 10;
@@ -21,28 +21,38 @@ public static class Constants
     // Dwarf planet stats
     public static int DwarfPlanetsStartingMass = 10;
     public static int DwarfPlanetCriticalMass = 20;
-    public static int DwarfPlanetScale = 5;
-
+    public static float DwarfPlanetScale = 10f;
+    public static float ColliderRadius_DwarfPlanet = 0.54f;
     // Planet stats
     public static int PlanetsStartingMass = 20;
     public static int PlanetCriticalMass = 50;
-    public static int PlanetScale = 10;
+    public static float PlanetScale = 13f;
+    public static float ColliderRadius_Planet = 0.55f;
 
     public static int DwarfStarStartingMass = 50;
     public static int DwarfStarCriticalMass = 100;
+    public static float DwarfStarScale = 13f;
+    public static float ColliderRadius_DwarfStar = 0.55f;
 
     public static int StarStartingMass = 100;
     public static int StarCriticalMass = 150;
+    public static float StarScale = 14f;
+    public static float ColliderRadius_Star = 0.6f;
 
     public static int GiantStarStartingMass = 150;
     public static int GiantStarCriticalMass = 250;
+    public static float GiantStarScale = 16f;
+    public static float ColliderRadius_GiantStar = 0.65f;
 
     public static int NeutronStarStartingMass = 250;
     public static int NeutronStarCriticalMass = 350;
+    public static float NeutronStarScale = 10f;
+    public static float ColliderRadius_NeutronStar = 0.6f;
 
     public static int BlackHoleStartingMass = 350;
     public static int BlackHoleCriticalMass = 1000;
-
+    public static float BlackHoleScale = 10f;
+    public static float ColliderRadius_BlackHole = 0.6f;
 
 
     public static int MaxGravitationalDistance = 50;
@@ -53,7 +63,7 @@ public static class Constants
     public static int LowerSecondsGenPlanet = 2; // нижняя граница в секундах в промежутке генерирования планет
     public static int UpperSecondsGenPlanet = 6; // верхняя граница в секундах в промежутке генерирования планет
 
-    public static int DistanceToGenerateObjects = 100;
+    public static int DistanceToGenerateObjects = 180;
 
     public static float TrailDisapearTime = 1f;
 
@@ -76,5 +86,16 @@ public static class Constants
     public static Dictionary<string, int> HierarchyMaxMass = new Dictionary<string, int> {
         { "Asteroid" , AsteroidCriticalMass}, { "DwarfPlanet", DwarfPlanetCriticalMass }, { "Planet", PlanetCriticalMass}, { "DwarfStar", DwarfStarCriticalMass},
         { "Star", StarCriticalMass }, { "GiantStar", GiantStarCriticalMass }, {"NeutronStar", NeutronStarCriticalMass }, {"BlackHole", BlackHoleCriticalMass } };
+
+    public static Dictionary<string, string[]> LegalToSpawn = new Dictionary<string, string[]> {
+        { "Asteroid" , new string[] {"Asteroid", "DwarfPlanet" } },
+        {"DwarfPlanet" , new string[] {"Asteroid", "DwarfPlanet" } },
+        {"Planet" , new string[] {"Asteroid", "DwarfPlanet", "Planet", "DwarfStar" } },
+        {"DwarfStar" , new string[] { "DwarfPlanet", "Planet", "DwarfStar", "Star" } },
+        {"Star" , new string[] { "DwarfPlanet", "Planet", "DwarfStar", "Star", "GiantStar" } },
+        {"GiantStar" , new string[] { "DwarfPlanet", "Planet", "DwarfStar", "Star", "GiantStar", "NeutronStar" } },
+        {"NeutronStar" , new string[] {"Planet", "DwarfStar", "Star", "GiantStar", "NeutronStar", "BlackHole" } },
+        {"BlackHole" , new string[] { "DwarfPlanet", "Planet", "DwarfStar", "Star", "GiantStar", "NeutronStar" , "BlackHole" } }
+    };
 
 }

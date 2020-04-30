@@ -28,7 +28,6 @@ public class Rotatator : MonoBehaviour {
 		
 		{
 			meshObject = this.gameObject.transform;
-			Debug.Log(meshObject);
 			if (meshObject == null)
 				meshObject = transform.Find(this.name);
 		}

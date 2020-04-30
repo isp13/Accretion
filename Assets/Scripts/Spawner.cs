@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
 
     private PrefabsStorage prefabs;
 
+    private GameObject player;
     private int asteroidsCount = 0;
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class Spawner : MonoBehaviour
         randomHash = this.GetInstanceID();
         rnd = new System.Random(randomHash);
         lastTimeGenerated = System.DateTime.Now;
-
+        player = GameObject.Find("Player");
         prefabs = GameObject.Find("PrefabStorage").GetComponent<PrefabsStorage>();
 
     }
@@ -30,10 +31,10 @@ public class Spawner : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (genType == "AsteroidONLY" && asteroidsCount <= 70 )
+        if (genType == "AsteroidONLY" && asteroidsCount <= 50 )
         {
             asteroidsCount += 1;
-            GameObject player = GameObject.Find("Player");
+            
             Vector3 vectorToSpawn = player.GetComponent<GravitationalBody>().GetMovementVector().normalized + (rnd.Next(0, 2) == 1 ? -1 : 1) * new Vector3(rnd.Next(), rnd.Next(), 0).normalized / 2;
 
             SpawnAsteroid(vectorToSpawn);
@@ -47,15 +48,51 @@ public class Spawner : MonoBehaviour
     /// </summary>
     public void Spawn()
     {
-        GameObject player = GameObject.Find("Player");
+        
         Vector3 vectorToSpawn = player.GetComponent<GravitationalBody>().GetMovementVector().normalized + (rnd.Next(0,2) == 1 ? -1: 1) *  new Vector3(rnd.Next(), rnd.Next(), 0).normalized / 2;
 
-
+        string[] objectsToSpawn = (Constants.LegalToSpawn[player.GetComponent<GravitationalBody>().name]);
+        string objectToSpawn = objectsToSpawn[rnd.Next(0, objectsToSpawn.Length)];
         if (System.Math.Pow(vectorToSpawn.x - player.transform.position.x, 2) + System.Math.Pow(vectorToSpawn.y - player.transform.position.y, 2) >= System.Math.Pow(Constants.DistanceToGenerateObjects, 2))
         {
-            if (rnd.Next(0, 2) == 0)
-                SpawnAsteroid(vectorToSpawn);
-            else SpawnPlanets(vectorToSpawn);
+            switch (objectToSpawn)
+            {
+                case "Asteroid":
+                    Debug.Log("Spawning Asteroid");
+                    SpawnAsteroid(vectorToSpawn);
+                    break;
+                case "DwarfPlanet":
+                    Debug.Log("Spawning DwarfPlanet");
+                    SpawnAsteroid(vectorToSpawn);
+                    break;
+                case "Planet":
+                    Debug.Log("Spawning Planet");
+                    SpawnAsteroid(vectorToSpawn);
+                    break;
+                case "DwarfStar":
+                    Debug.Log("Spawning DwarfStar");
+                    SpawnAsteroid(vectorToSpawn);
+                    break;
+                case "Star":
+                    Debug.Log("Spawning Star");
+                    SpawnAsteroid(vectorToSpawn);
+                    break;
+                case "GiantStar":
+                    Debug.Log("Spawning GiantStar");
+                    SpawnAsteroid(vectorToSpawn);
+                    break;
+                case "NeutronStar":
+                    Debug.Log("Spawning NeutronStar");
+                    SpawnAsteroid(vectorToSpawn);
+                    break;
+                case "BlackHole":
+                    Debug.Log("Spawning BlackHole");
+                    SpawnAsteroid(vectorToSpawn);
+                    break;
+                default:
+                    Debug.Log("WRONG CASE SWITCH");
+                    break;
+            }
         }
         
     }
@@ -68,7 +105,7 @@ public class Spawner : MonoBehaviour
         Object planetPrefab = prefabs.planets[rnd.Next(0, prefabs.planets.Length)] as GameObject;
 
         // позиция игрока
-        var Pos = GameObject.Find("Player").GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
 
         // инициализируем планету в игре
         var newplanet = Instantiate(planetPrefab, Pos, this.transform.rotation) as GameObject;
@@ -92,12 +129,12 @@ public class Spawner : MonoBehaviour
 
         Object asteroidPrefab = prefabs.asteroids[rnd.Next(0, prefabs.asteroids.Length)] as GameObject;
 
-        var Pos = GameObject.Find("Player").GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(asteroidPrefab, Pos, this.transform.rotation) as GameObject;
         newplanet.tag = "Asteroid";
         newplanet.AddComponent<GravitationalBody>();
         newplanet.GetComponent<GravitationalBody>().name = "Asteroid";
-        newplanet.transform.localScale *= Constants.AsteroidScale;
+        newplanet.transform.localScale = new Vector3(Constants.AsteroidScale, Constants.AsteroidScale, Constants.AsteroidScale); // УБРАЛ УМНОЖИТЬ РАВНО
 
         Material[] materials = new Material[] { prefabs.asteroidsMaterials[rnd.Next(0, prefabs.asteroidsMaterials.Length)] };
         

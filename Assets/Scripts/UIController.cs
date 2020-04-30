@@ -31,7 +31,7 @@ public class UIController : MonoBehaviour
         Mass.text = "Mass: " + scr.ShareObjectData("mass");;
         Vector.text = "Vector2: <" + scr.ShareObjectData("vector") + ">" ;
         Coords.text = "Coordinates: <" + scr.ShareObjectData("coords") + ">";
-        nextObject.text = "Next: ";
+        nextObject.text = "Next: " + Constants.PlayersNextObject;
     }
 
     void FetchInfoLabels() { 

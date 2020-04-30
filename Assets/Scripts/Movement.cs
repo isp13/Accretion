@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
     int speedLimit = 20;
     public static bool isMoving = false;
     private Rigidbody2D rb;
+
+    public FloatingJoystick variableJoystick;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +53,13 @@ public class Movement : MonoBehaviour
         {
             rb.AddForce(Vector2.down * speed);
             //rb.AddForce(Vector3.up * speed);
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, speedLimit);
+            somethingWasPressed = true;
+        }
+        if (variableJoystick.Vertical != 0 || variableJoystick.Horizontal != 0)
+        {
+            Vector3 direction = Vector3.up * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
+            rb.AddForce(direction * speed);
             rb.velocity = Vector2.ClampMagnitude(rb.velocity, speedLimit);
             somethingWasPressed = true;
         }
