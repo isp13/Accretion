@@ -111,6 +111,7 @@ public class GravitationalBody : MonoBehaviour
         this.gameObject.AddComponent<TrailRenderer>();
         this.GetComponent<TrailRenderer>().time = Constants.TrailDisapearTime;
         this.GetComponent<TrailRenderer>().material.color = Random.ColorHSV(0f,1f,1f,1f,1f, 1f);
+        this.GetComponent<TrailRenderer>().enabled = false;
     }
 
     void SetupMeshRenderer() {
@@ -142,7 +143,7 @@ public class GravitationalBody : MonoBehaviour
                 {
                     
                 }
-                else if ((this.name != "Asteroid" || this.tag != "Asteroid") && Constants.HierarchyDict[this.name] >= Constants.HierarchyDict[otherBody.GetComponent<GravitationalBody>().name])
+                else if ((this.name != "Asteroid") && Constants.HierarchyDict[this.name] >= Constants.HierarchyDict[otherBody.GetComponent<GravitationalBody>().name])
                     otherBody.AddForce(Constants.GravityPower * DetermineGravitationalForce(otherBody));
 
             }
@@ -414,6 +415,14 @@ public class GravitationalBody : MonoBehaviour
         float scaledRadius = Mathf.Max(transform.localScale.x, transform.localScale.y);
         this.GetComponent<CircleCollider2D>().radius = scaledRadius;
         Destroy(randomOne);
+
+
+        if (this.tag == "Player")
+        {
+            Constants.PlayersNextObject = "Dwarf Planet";
+            GameObject.Find("Main Camera").GetComponent<CameraScript>().SmoothChangeOrthographicSize(Constants.AsteroidMainCameraDistance);
+        }
+
     }
     /// <summary>
     /// Функция для превращения модели объекта в модель карликовой планеты
@@ -444,7 +453,13 @@ public class GravitationalBody : MonoBehaviour
         }
         
         Destroy(randomOne);
-        Constants.PlayersNextObject = "Planet";
+        
+
+        if (this.tag == "Player")
+        {
+            Constants.PlayersNextObject = "Planet";
+            GameObject.Find("Main Camera").GetComponent<CameraScript>().SmoothChangeOrthographicSize(Constants.PlanetMainCameraDistance);
+        }
     }
 
     public void Retransform_Planet()
@@ -474,7 +489,13 @@ public class GravitationalBody : MonoBehaviour
         }
 
         Destroy(randomOne);
-        Constants.PlayersNextObject = "Dwarf Star";
+        
+
+        if (this.tag == "Player")
+        {
+            Constants.PlayersNextObject = "Dwarf Star";
+            GameObject.Find("Main Camera").GetComponent<CameraScript>().SmoothChangeOrthographicSize(Constants.PlanetMainCameraDistance);
+        }
     }
 
     public void Retransform_DwarfStar()
@@ -508,7 +529,12 @@ public class GravitationalBody : MonoBehaviour
         }
 
         Destroy(randomOne);
-        Constants.PlayersNextObject = "Star";
+
+        if (this.tag == "Player")
+        {
+            Constants.PlayersNextObject = "Star";
+            GameObject.Find("Main Camera").GetComponent<CameraScript>().SmoothChangeOrthographicSize(Constants.PlanetMainCameraDistance);
+        }
     }
 
     public void Retransform_Star()
@@ -539,7 +565,12 @@ public class GravitationalBody : MonoBehaviour
         }
 
         Destroy(randomOne);
-        Constants.PlayersNextObject = "Giant Star";
+
+        if (this.tag == "Player")
+        {
+            Constants.PlayersNextObject = "Giant Star";
+            GameObject.Find("Main Camera").GetComponent<CameraScript>().SmoothChangeOrthographicSize(Constants.PlanetMainCameraDistance);
+        }
     }
 
     public void Retransform_GiantStar()
@@ -570,7 +601,13 @@ public class GravitationalBody : MonoBehaviour
         }
 
         Destroy(randomOne);
-        Constants.PlayersNextObject = "Neutron Star";
+        
+
+        if (this.tag == "Player")
+        {
+            Constants.PlayersNextObject = "Neutron Star";
+            GameObject.Find("Main Camera").GetComponent<CameraScript>().SmoothChangeOrthographicSize(Constants.PlanetMainCameraDistance);
+        }
     }
 
     public void Retransform_NeutronStar()
@@ -602,7 +639,13 @@ public class GravitationalBody : MonoBehaviour
         }
 
         Destroy(randomOne);
-        Constants.PlayersNextObject = "Black Star";
+        
+
+        if (this.tag == "Player")
+        {
+            Constants.PlayersNextObject = "Black Hole";
+            GameObject.Find("Main Camera").GetComponent<CameraScript>().SmoothChangeOrthographicSize(Constants.PlanetMainCameraDistance);
+        }
     }
 
     public void Retransform_BlackHole()

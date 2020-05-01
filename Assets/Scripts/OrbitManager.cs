@@ -25,6 +25,7 @@ public class OrbitManager : MonoBehaviour
         
         //Debug.Log("ONTRIGGER ENTER");
         StartCoroutine("FlashesBeforeSomething");
+        other.gameObject.GetComponent<TrailRenderer>().enabled = true;
         GameObject.Find("OrbitRenderer").GetComponent<LineRenderer>().enabled = true;
         
     }
@@ -32,9 +33,9 @@ public class OrbitManager : MonoBehaviour
     //When the Primitive exits the collision, it will change Color
     private void OnTriggerExit2D(Collider2D other)
     {
-        //Debug.Log("ONTRIGGER EXIT");
+        Debug.Log("ONTRIGGER EXIT");
         //StartCoroutine("FlashesBeforeSomething");
-
+        other.gameObject.GetComponent<TrailRenderer>().enabled = false;
         GameObject.Find("OrbitRenderer").GetComponent<LineRenderer>().enabled = false;
         
     }

@@ -17,12 +17,13 @@ public static class Constants
     public static float AsteroidStartingMass = 1f;
     public static int AsteroidCriticalMass = 10;
     public static int AsteroidScale = 1;
-
+    public static int AsteroidMainCameraDistance = 30;
     // Dwarf planet stats
     public static int DwarfPlanetsStartingMass = 10;
-    public static int DwarfPlanetCriticalMass = 20;
+    public static int DwarfPlanetCriticalMass = 25;
     public static float DwarfPlanetScale = 10f;
     public static float ColliderRadius_DwarfPlanet = 0.54f;
+    public static int PlanetMainCameraDistance = 70;
     // Planet stats
     public static int PlanetsStartingMass = 20;
     public static int PlanetCriticalMass = 50;

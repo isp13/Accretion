@@ -12,6 +12,7 @@ TagManager:
   - GiantStar
   - NeutronStar
   - BlackHole
+  - CameraMain
   layers:
   - Default
   - TransparentFX

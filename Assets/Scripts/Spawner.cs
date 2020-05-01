@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (genType == "AsteroidONLY" && asteroidsCount <= 50 )
+        if (genType == "AsteroidONLY" && asteroidsCount <= 15 )
         {
             asteroidsCount += 1;
             
@@ -63,31 +63,31 @@ public class Spawner : MonoBehaviour
                     break;
                 case "DwarfPlanet":
                     Debug.Log("Spawning DwarfPlanet");
-                    SpawnAsteroid(vectorToSpawn);
+                    SpawnDwarfPlanet(vectorToSpawn);
                     break;
                 case "Planet":
                     Debug.Log("Spawning Planet");
-                    SpawnAsteroid(vectorToSpawn);
+                    SpawnPlanet(vectorToSpawn);
                     break;
                 case "DwarfStar":
                     Debug.Log("Spawning DwarfStar");
-                    SpawnAsteroid(vectorToSpawn);
+                    SpawnDwarfStar(vectorToSpawn);
                     break;
                 case "Star":
                     Debug.Log("Spawning Star");
-                    SpawnAsteroid(vectorToSpawn);
+                    SpawnStar(vectorToSpawn);
                     break;
                 case "GiantStar":
                     Debug.Log("Spawning GiantStar");
-                    SpawnAsteroid(vectorToSpawn);
+                    SpawnGiantStar(vectorToSpawn);
                     break;
                 case "NeutronStar":
                     Debug.Log("Spawning NeutronStar");
-                    SpawnAsteroid(vectorToSpawn);
+                    SpawnNeutronStar(vectorToSpawn);
                     break;
                 case "BlackHole":
                     Debug.Log("Spawning BlackHole");
-                    SpawnAsteroid(vectorToSpawn);
+                    SpawnBlackHole(vectorToSpawn);
                     break;
                 default:
                     Debug.Log("WRONG CASE SWITCH");
@@ -139,6 +139,91 @@ public class Spawner : MonoBehaviour
         Material[] materials = new Material[] { prefabs.asteroidsMaterials[rnd.Next(0, prefabs.asteroidsMaterials.Length)] };
         
         newplanet.GetComponent<MeshRenderer>().materials = materials;
+    }
+
+    void SpawnDwarfPlanet(Vector3 vc)
+    {
+        Object planetPrefab = prefabs.planets[rnd.Next(0, prefabs.planets.Length)] as GameObject;
+
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var newplanet = Instantiate(planetPrefab, Pos, this.transform.rotation) as GameObject;
+        newplanet.tag = "DwarfPlanet";
+        newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "DwarfPlanet";
+        newplanet.transform.localScale = new Vector3(Constants.PlanetScale, Constants.PlanetScale, Constants.PlanetScale); // УБРАЛ УМНОЖИТЬ РАВНО
+
+    }
+
+    void SpawnPlanet(Vector3 vc)
+    {
+        Object planetPrefab = prefabs.planets[rnd.Next(0, prefabs.planets.Length)] as GameObject;
+
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var newplanet = Instantiate(planetPrefab, Pos, this.transform.rotation) as GameObject;
+        newplanet.tag = "Planet";
+        newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "Planet";
+        newplanet.transform.localScale = new Vector3(Constants.PlanetScale, Constants.PlanetScale, Constants.PlanetScale); // УБРАЛ УМНОЖИТЬ РАВНО
+    }
+
+    void SpawnDwarfStar(Vector3 vc)
+    {
+        Object dwarfStarsPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var newplanet = Instantiate(dwarfStarsPrefab, Pos, this.transform.rotation) as GameObject;
+        newplanet.tag = "DwarfStar";
+        newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "DwarfStar";
+        newplanet.transform.localScale = new Vector3(Constants.DwarfStarScale, Constants.DwarfStarScale, Constants.DwarfStarScale); // УБРАЛ УМНОЖИТЬ РАВНО
+    }
+
+    void SpawnStar(Vector3 vc)
+    {
+        Object StarsPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var newplanet = Instantiate(StarsPrefab, Pos, this.transform.rotation) as GameObject;
+        newplanet.tag = "DwarfStar";
+        newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "DwarfStar";
+        newplanet.transform.localScale = new Vector3(Constants.StarScale, Constants.StarScale, Constants.StarScale); // УБРАЛ УМНОЖИТЬ РАВНО
+    }
+
+    void SpawnGiantStar(Vector3 vc)
+    {
+        Object giantStarsPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var newplanet = Instantiate(giantStarsPrefab, Pos, this.transform.rotation) as GameObject;
+        newplanet.tag = "GiantStar";
+        newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "GiantStar";
+        newplanet.transform.localScale = new Vector3(Constants.GiantStarScale, Constants.GiantStarScale, Constants.GiantStarScale); // УБРАЛ УМНОЖИТЬ РАВНО
+    }
+
+    void SpawnNeutronStar(Vector3 vc)
+    {
+        Object neutronStarsPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var newplanet = Instantiate(neutronStarsPrefab, Pos, this.transform.rotation) as GameObject;
+        newplanet.tag = "NeutronStar";
+        newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "NeutronStar";
+        newplanet.transform.localScale = new Vector3(Constants.NeutronStarScale, Constants.NeutronStarScale, Constants.NeutronStarScale); // УБРАЛ УМНОЖИТЬ РАВНО
+    }
+
+    void SpawnBlackHole(Vector3 vc)
+    {
+        Object blackholePrefab = prefabs.BlackHole[rnd.Next(0, prefabs.BlackHole.Length)] as GameObject;
+
+        var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
+        var newplanet = Instantiate(blackholePrefab, Pos, this.transform.rotation) as GameObject;
+        newplanet.tag = "BlackHole";
+        newplanet.AddComponent<GravitationalBody>();
+        newplanet.GetComponent<GravitationalBody>().name = "BlackHole";
+        newplanet.transform.localScale = new Vector3(Constants.BlackHoleScale, Constants.BlackHoleScale, Constants.BlackHoleScale); // УБРАЛ УМНОЖИТЬ РАВНО
     }
 
     public void SpawnAsteroidConstantPosition(Vector3 vc)
