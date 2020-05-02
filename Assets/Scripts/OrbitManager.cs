@@ -6,9 +6,14 @@ public class OrbitManager : MonoBehaviour
 {
     //private int FalseEntries = 0;
     // Start is called before the first frame update
+    LineRenderer OrbitRenderer;
+    GravitationalBody player;
     void Start()
     {
+        OrbitRenderer = GameObject.Find("OrbitRenderer").GetComponent<LineRenderer>();
+        player = GameObject.Find("Player").GetComponent<GravitationalBody>();
         
+        OrbitRenderer.enabled = false;
     }
 
     // Update is called once per frame
@@ -22,21 +27,24 @@ public class OrbitManager : MonoBehaviour
     //When the Primitive collides with the walls, it will reverse direction
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (player.name != "Asteroid")
+        {
+            //Debug.Log("ONTRIGGER ENTER");
+            StartCoroutine("FlashesBeforeSomething");
         
-        //Debug.Log("ONTRIGGER ENTER");
-        StartCoroutine("FlashesBeforeSomething");
-        other.gameObject.GetComponent<TrailRenderer>().enabled = true;
-        GameObject.Find("OrbitRenderer").GetComponent<LineRenderer>().enabled = true;
+            other.gameObject.GetComponent<TrailRenderer>().enabled = true;
+            OrbitRenderer.enabled = true;
+        }
         
     }
 
     //When the Primitive exits the collision, it will change Color
-    private void OnTriggerExit2D(Collider2D other)
-    {
+    private void OnTriggerExit2D(Collider2D other) {
+
         Debug.Log("ONTRIGGER EXIT");
-        //StartCoroutine("FlashesBeforeSomething");
-        other.gameObject.GetComponent<TrailRenderer>().enabled = false;
-        GameObject.Find("OrbitRenderer").GetComponent<LineRenderer>().enabled = false;
+            //StartCoroutine("FlashesBeforeSomething");
+            other.gameObject.GetComponent<TrailRenderer>().enabled = false;
+            OrbitRenderer.enabled = false;
         
     }
 
@@ -49,7 +57,7 @@ public class OrbitManager : MonoBehaviour
             counter += 1;
             yield return new WaitForSeconds(0.3f); // "pauses" for 2 seconds.. note, the actual game doesn't pause..
             //Debug.Log("IEnumerator");
-            GameObject.Find("OrbitRenderer").GetComponent<LineRenderer>().enabled = counter % 2 != 0;
+            OrbitRenderer.enabled = counter % 2 != 0;
         }
     }
 }

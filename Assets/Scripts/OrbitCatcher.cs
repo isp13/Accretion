@@ -8,7 +8,6 @@ public class OrbitCatcher : MonoBehaviour
     // How long the player needs to stay at location
     public float timerCountDown = 5.0f;
 
-    
 
     void FixedUpdate()
     {
@@ -42,6 +41,8 @@ public class OrbitCatcher : MonoBehaviour
             {
                 other.GetComponent<GravitationalBody>().target = this.transform;
                 other.GetComponent<GravitationalBody>().onOrbit = true;
+
+                other.GetComponent<TrailRenderer>().enabled = false;
                 timerCountDown = 5;
             }
 

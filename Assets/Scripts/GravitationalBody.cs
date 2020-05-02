@@ -45,6 +45,7 @@ public class GravitationalBody : MonoBehaviour
     public Transform target;
 
     private System.DateTime lastTimeDownGrade;
+
     void Start()
     {
         lastTimeDownGrade = System.DateTime.Now;
@@ -59,6 +60,7 @@ public class GravitationalBody : MonoBehaviour
             this.GetComponent<Rigidbody2D>().AddForce(Constants.GravityPower * new Vector3(rnd.Next(), rnd.Next(), rnd.Next()).normalized);
 
         }
+        
 
         this.maxDistance = Constants.MaxGravitationalDistance;
 
@@ -323,6 +325,10 @@ public class GravitationalBody : MonoBehaviour
                         Retransform_DwarfPlanet();
 
                     
+                }
+                else {
+                    if (this.name == "Asteroid") // небольшое увеличение астероида после удара в другой астероид
+                        this.transform.localScale *= 1.1f;
                 }
 
             }

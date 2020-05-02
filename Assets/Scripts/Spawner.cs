@@ -136,6 +136,11 @@ public class Spawner : MonoBehaviour
         newplanet.GetComponent<GravitationalBody>().name = "Asteroid";
         newplanet.transform.localScale = new Vector3(Constants.AsteroidScale, Constants.AsteroidScale, Constants.AsteroidScale); // УБРАЛ УМНОЖИТЬ РАВНО
 
+
+        newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.AsteroidStartingMass;
+        newplanet.GetComponent<GravitationalBody>().ImaginaryMass = Constants.AsteroidCriticalMass;
+        newplanet.GetComponent<Rigidbody2D>().mass = newplanet.GetComponent<GravitationalBody>().StartingMass;
+
         Material[] materials = new Material[] { prefabs.asteroidsMaterials[rnd.Next(0, prefabs.asteroidsMaterials.Length)] };
         
         newplanet.GetComponent<MeshRenderer>().materials = materials;
@@ -150,6 +155,11 @@ public class Spawner : MonoBehaviour
         newplanet.tag = "DwarfPlanet";
         newplanet.AddComponent<GravitationalBody>();
         newplanet.GetComponent<GravitationalBody>().name = "DwarfPlanet";
+
+        newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.DwarfPlanetsStartingMass;
+        newplanet.GetComponent<GravitationalBody>().ImaginaryMass = Constants.DwarfPlanetCriticalMass;
+        newplanet.GetComponent<Rigidbody2D>().mass = newplanet.GetComponent<GravitationalBody>().StartingMass;
+
         newplanet.transform.localScale = new Vector3(Constants.PlanetScale, Constants.PlanetScale, Constants.PlanetScale); // УБРАЛ УМНОЖИТЬ РАВНО
 
     }
@@ -163,6 +173,11 @@ public class Spawner : MonoBehaviour
         newplanet.tag = "Planet";
         newplanet.AddComponent<GravitationalBody>();
         newplanet.GetComponent<GravitationalBody>().name = "Planet";
+
+        newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.PlanetsStartingMass;
+        newplanet.GetComponent<GravitationalBody>().ImaginaryMass = Constants.PlanetCriticalMass;
+        newplanet.GetComponent<Rigidbody2D>().mass = newplanet.GetComponent<GravitationalBody>().StartingMass;
+
         newplanet.transform.localScale = new Vector3(Constants.PlanetScale, Constants.PlanetScale, Constants.PlanetScale); // УБРАЛ УМНОЖИТЬ РАВНО
     }
 
@@ -175,6 +190,11 @@ public class Spawner : MonoBehaviour
         newplanet.tag = "DwarfStar";
         newplanet.AddComponent<GravitationalBody>();
         newplanet.GetComponent<GravitationalBody>().name = "DwarfStar";
+
+        newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.DwarfStarStartingMass;
+        newplanet.GetComponent<GravitationalBody>().ImaginaryMass = Constants.DwarfStarCriticalMass;
+        newplanet.GetComponent<Rigidbody2D>().mass = newplanet.GetComponent<GravitationalBody>().StartingMass;
+
         newplanet.transform.localScale = new Vector3(Constants.DwarfStarScale, Constants.DwarfStarScale, Constants.DwarfStarScale); // УБРАЛ УМНОЖИТЬ РАВНО
     }
 
@@ -184,9 +204,14 @@ public class Spawner : MonoBehaviour
 
         var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(StarsPrefab, Pos, this.transform.rotation) as GameObject;
-        newplanet.tag = "DwarfStar";
+        newplanet.tag = "Star";
         newplanet.AddComponent<GravitationalBody>();
-        newplanet.GetComponent<GravitationalBody>().name = "DwarfStar";
+        newplanet.GetComponent<GravitationalBody>().name = "Star";
+
+        newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.StarStartingMass;
+        newplanet.GetComponent<GravitationalBody>().ImaginaryMass = Constants.StarCriticalMass;
+        newplanet.GetComponent<Rigidbody2D>().mass = newplanet.GetComponent<GravitationalBody>().StartingMass;
+
         newplanet.transform.localScale = new Vector3(Constants.StarScale, Constants.StarScale, Constants.StarScale); // УБРАЛ УМНОЖИТЬ РАВНО
     }
 
@@ -199,6 +224,11 @@ public class Spawner : MonoBehaviour
         newplanet.tag = "GiantStar";
         newplanet.AddComponent<GravitationalBody>();
         newplanet.GetComponent<GravitationalBody>().name = "GiantStar";
+
+        newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.GiantStarStartingMass;
+        newplanet.GetComponent<GravitationalBody>().ImaginaryMass = Constants.GiantStarCriticalMass;
+        newplanet.GetComponent<Rigidbody2D>().mass = newplanet.GetComponent<GravitationalBody>().StartingMass;
+
         newplanet.transform.localScale = new Vector3(Constants.GiantStarScale, Constants.GiantStarScale, Constants.GiantStarScale); // УБРАЛ УМНОЖИТЬ РАВНО
     }
 
@@ -211,6 +241,11 @@ public class Spawner : MonoBehaviour
         newplanet.tag = "NeutronStar";
         newplanet.AddComponent<GravitationalBody>();
         newplanet.GetComponent<GravitationalBody>().name = "NeutronStar";
+
+        newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.NeutronStarStartingMass;
+        newplanet.GetComponent<GravitationalBody>().ImaginaryMass = Constants.NeutronStarCriticalMass;
+        newplanet.GetComponent<Rigidbody2D>().mass = newplanet.GetComponent<GravitationalBody>().StartingMass;
+
         newplanet.transform.localScale = new Vector3(Constants.NeutronStarScale, Constants.NeutronStarScale, Constants.NeutronStarScale); // УБРАЛ УМНОЖИТЬ РАВНО
     }
 
@@ -223,6 +258,11 @@ public class Spawner : MonoBehaviour
         newplanet.tag = "BlackHole";
         newplanet.AddComponent<GravitationalBody>();
         newplanet.GetComponent<GravitationalBody>().name = "BlackHole";
+
+        newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.BlackHoleStartingMass;
+        newplanet.GetComponent<GravitationalBody>().ImaginaryMass = Constants.BlackHoleCriticalMass;
+        newplanet.GetComponent<Rigidbody2D>().mass = newplanet.GetComponent<GravitationalBody>().StartingMass;
+
         newplanet.transform.localScale = new Vector3(Constants.BlackHoleScale, Constants.BlackHoleScale, Constants.BlackHoleScale); // УБРАЛ УМНОЖИТЬ РАВНО
     }
 
