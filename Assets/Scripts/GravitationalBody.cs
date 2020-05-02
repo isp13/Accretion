@@ -122,8 +122,10 @@ public class GravitationalBody : MonoBehaviour
     {
         if (!onOrbit) //если не на орбите - физика работает в нормальном режиме
         {
+            
             foreach (Rigidbody2D otherBody in attractableBodies)
             {
+               
 
                 if (otherBody == null)
                     continue;

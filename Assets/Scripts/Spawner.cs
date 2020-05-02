@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (genType == "AsteroidONLY" && asteroidsCount <= 15 )
+        if (genType == "AsteroidONLY" && asteroidsCount <= 30 )
         {
             asteroidsCount += 1;
             
