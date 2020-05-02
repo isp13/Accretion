@@ -154,6 +154,7 @@ public class Spawner : MonoBehaviour
         var newplanet = Instantiate(planetPrefab, Pos, this.transform.rotation) as GameObject;
         newplanet.tag = "DwarfPlanet";
         newplanet.AddComponent<GravitationalBody>();
+        newplanet.AddComponent<Rotatator>();
         newplanet.GetComponent<GravitationalBody>().name = "DwarfPlanet";
 
         newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.DwarfPlanetsStartingMass;
