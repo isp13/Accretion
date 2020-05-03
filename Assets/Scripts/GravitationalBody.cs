@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using UnityEditor;
+using cakeslice;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class GravitationalBody : MonoBehaviour
@@ -60,7 +61,11 @@ public class GravitationalBody : MonoBehaviour
             this.GetComponent<Rigidbody2D>().AddForce(Constants.GravityPower * new Vector3(rnd.Next(), rnd.Next(), rnd.Next()).normalized);
 
         }
-        
+
+        // подсветка включается только у планет и звезд. поэтому отключаем сейчас
+        if (this.tag == "Player" && this.name == "Asteroid")
+            this.GetComponent<Outline>().enabled = false;
+
 
         this.maxDistance = Constants.MaxGravitationalDistance;
 
@@ -217,42 +222,29 @@ public class GravitationalBody : MonoBehaviour
 
         Debug.Log(coll.gameObject.name);
         Debug.Log(this.gameObject.name);
-        // если наш объект больше другого на две позиции - увеличение массы возможно даже врезавшись. ДОБАВИТТЬ СПРАВА ПЛЮС 1
+        // если наш объект больше другого на две позиции - увеличение массы возможно даже врезавшись. 
         if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name] + 1)
         {
             Debug.Log("Destroying object because a bigger one was near");
             Destroy(coll.gameObject);
-            this.startingMass += 1;
+            this.StartingMass += 1;
 
             if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
             {
                 // transform to new object
                 Debug.Log("NEED TO TRANSFORM");
 
-                // номер следующего объекта из словаря
-                int nextRank = Constants.HierarchyDict[name] + 1;
+                Upgrade_Retransform_Object();
 
-                this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
-                if (this.tag != "Player")
-                    this.tag = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
-                // изменение мешей, массы и тп при трансформации
 
-                if (name == "DwarfPlanet")
-                    Retransform_DwarfPlanet();
-
-                else if (name == "Planet")
-                    Retransform_Planet();
-
-                else if (name == "DwarfStar")
-                    Retransform_DwarfStar();
-                else if (name == "Star")
-                    Retransform_Star();
-                else if (name == "GiantStar")
-                    Retransform_GiantStar();
-                else if (name == "NeutronStar")
-                    Retransform_NeutronStar();
+                if (this.tag == "Player" && (this.name == "Planet" || this.name.Contains("Star")))
+                    this.GetComponent<Outline>().enabled = true;
                 else
-                    Retransform_BlackHole();
+                {
+                    this.GetComponent<Outline>().enabled = false;
+                }
+
+                
             }
         }
         else if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name]) // если больше на одну позицию
@@ -260,45 +252,29 @@ public class GravitationalBody : MonoBehaviour
             Debug.Log("Destroying object because a bigger one was near");
             //GameObject.Find("OnlyAsteroidsGenerator").GetComponent<Spawner>().SpawnAsteroidConstantPosition(this.transform.position + new Vector3((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble()));
             Destroy(coll.gameObject);
-            this.startingMass += 1;
+            this.StartingMass -= 1;
 
-            if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
+            if (StartingMass < Constants.HierarchyMinMass[name]) // если объект потерял массу и стал весить меньше обычного
             {
                 // transform to new object
                 Debug.Log("NEED TO TRANSFORM");
 
-                // номер следующего объекта из словаря
-                int nextRank = Constants.HierarchyDict[name] + 1;
+                DownGrade_Retransform_Object();
 
-                this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
-                if (this.tag != "Player")
-                    this.tag = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
+
+                if (this.tag == "Player" && (this.name == "Planet" || this.name.Contains("Star")))
+                    this.GetComponent<Outline>().enabled = true;
+                else
+                {
+                    this.GetComponent<Outline>().enabled = false;
+                }
+
                 // изменение мешей, массы и тп при трансформации
 
-                if (name == "Asteroid")
-                    Retransform_Asteroid();
-
-                else if (name == "DwarfPlanet")
-                    Retransform_DwarfPlanet();
-
-                else if (name == "Planet")
-                    Retransform_Planet();
-
-                else if (name == "DwarfStar")
-                    Retransform_DwarfStar();
-                else if (name == "Star")
-                    Retransform_Star();
-                else if (name == "GiantStar")
-                    Retransform_GiantStar();
-                else if (name == "NeutronStar")
-                    Retransform_NeutronStar();
-                else if (name == "BlackHole")
-                    Retransform_BlackHole();
-                else
-                    Debug.Log("tag error");
+                
             }
         }
-        else if (Constants.HierarchyDict[name] == Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name] && this.name == "Asteroid")
+        else if (this.name == "Asteroid" && Constants.HierarchyDict[name] == Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name])
         {
             if (this.tag == "Player")
             {
@@ -316,6 +292,15 @@ public class GravitationalBody : MonoBehaviour
                     this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
                     if (this.tag != "Player")
                         this.tag = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
+
+
+                    if (this.tag == "Player" && (this.name == "Planet" || this.name.Contains("Star")))
+                        this.GetComponent<Outline>().enabled = true;
+                    else
+                    {
+                        this.GetComponent<Outline>().enabled = false;
+                    }
+
                     // изменение мешей, массы и тп при трансформации
 
                     if (name == "Asteroid")
@@ -377,8 +362,48 @@ public class GravitationalBody : MonoBehaviour
         return rb.velocity;
     }
 
+
+    public void Upgrade_Retransform_Object()
+    {
+
+        // transform to new object
+        Debug.Log("NEED TO TRANSFORM");
+
+        // номер следующего объекта из словаря
+        int nextRank = Constants.HierarchyDict[name] + 1;
+
+        this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
+        if (this.tag != "Player")
+            this.tag = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
+        // изменение мешей, массы и тп при трансформации
+
+        if (name == "Asteroid")
+            Retransform_Asteroid();
+
+        else if (name == "DwarfPlanet")
+            Retransform_DwarfPlanet();
+
+        else if (name == "Planet")
+            Retransform_Planet();
+
+        else if (name == "DwarfStar")
+            Retransform_DwarfStar();
+        else if (name == "Star")
+            Retransform_Star();
+        else if (name == "GiantStar")
+            Retransform_GiantStar();
+        else if (name == "NeutronStar")
+            Retransform_NeutronStar();
+        else if (name == "BlackHole")
+            Retransform_BlackHole();
+        else
+            Debug.Log("tag error");
+
+    }
+
     public void DownGrade_Retransform_Object()
     {
+        float saveMass = this.StartingMass;
         int nextRank = Constants.HierarchyDict[name] - 1;
         this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
         if (this.tag != "Player")
@@ -405,6 +430,8 @@ public class GravitationalBody : MonoBehaviour
             Retransform_BlackHole();
         else
             Debug.Log("tag error");
+
+        this.StartingMass = (int)(saveMass * 0.8f);
     }
 
     public void Retransform_Asteroid()
@@ -509,6 +536,7 @@ public class GravitationalBody : MonoBehaviour
     public void Retransform_DwarfStar()
     {
         Debug.Log("Retransform_DwarfStar");
+
         // тк звезда, то увеличиваем подсвевиваемость префаба
         var cam = GameObject.Find("Main Camera").GetComponent<cakeslice.OutlineEffect>().lineIntensity = 1.3f;
 

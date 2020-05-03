@@ -90,7 +90,7 @@ public static class Constants
 
     public static Dictionary<string, string[]> LegalToSpawn = new Dictionary<string, string[]> {
         { "Asteroid" , new string[] {"Asteroid", "DwarfPlanet" } },
-        {"DwarfPlanet" , new string[] {"Asteroid", "DwarfPlanet" } },
+        {"DwarfPlanet" , new string[] {"Asteroid", "DwarfPlanet", "Planet" } },
         {"Planet" , new string[] {"Asteroid", "DwarfPlanet", "Planet", "DwarfStar" } },
         {"DwarfStar" , new string[] { "DwarfPlanet", "Planet", "DwarfStar", "Star" } },
         {"Star" , new string[] { "DwarfPlanet", "Planet", "DwarfStar", "Star", "GiantStar" } },

@@ -27,7 +27,7 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        planetName.text = "Type: " + scr.ShareObjectData("name");
+        planetName.text = "" + scr.ShareObjectData("name");
         Mass.text = "Mass: " + scr.ShareObjectData("mass");;
         Vector.text = "Vector2: <" + scr.ShareObjectData("vector") + ">" ;
         Coords.text = "Coordinates: <" + scr.ShareObjectData("coords") + ">";

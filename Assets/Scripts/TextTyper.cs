@@ -14,7 +14,7 @@ public class TextTyper : MonoBehaviour
         
         for (int i = 0; i < firstText.Length; i++)
         {
-            yield return new WaitForSeconds(0.23f);
+            yield return new WaitForSeconds(0.1f);
             uiText.text = firstText.Substring(0, i + 1);
         }
 
