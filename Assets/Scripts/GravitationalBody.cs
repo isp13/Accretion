@@ -77,11 +77,31 @@ public class GravitationalBody : MonoBehaviour
         SetupMeshRenderer();
         SetupTrailRenderer();
 
-        
-        
+        SetupMapPoint();
+
 
         //Add this gravitational body to the list, so that all other gravitational bodies can be effected by it
         attractableBodies.Add(rb);
+    }
+
+    void SetupMapPoint()
+    {
+        if (this.tag != "Player")
+        {
+            var point = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            Destroy(point.GetComponent<SphereCollider>());
+
+            //point.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1);
+            
+
+            point.layer = LayerMask.NameToLayer("POINT");
+
+            var pointgm = Instantiate(point);
+            pointgm.transform.position = (this.transform.position);
+            pointgm.transform.localScale *=  5;
+            //Sets "ChoiceButtonHolder" as the new parent of the s1Button.
+            pointgm.transform.SetParent(this.transform);
+        }
     }
 
     void SetupRigidbody2D()

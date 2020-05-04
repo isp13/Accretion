@@ -9,6 +9,6 @@ public class ApplicationSet : MonoBehaviour
     {
         // Turn off v-sync
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 300;
     }
 }

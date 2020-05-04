@@ -13,6 +13,7 @@ TagManager:
   - NeutronStar
   - BlackHole
   - CameraMain
+  - point
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - POINT
   - 
   - 
   - 

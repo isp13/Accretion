@@ -56,15 +56,15 @@ public static class Constants
     public static float ColliderRadius_BlackHole = 0.6f;
 
 
-    public static int MaxGravitationalDistance = 50;
+    public static int MaxGravitationalDistance = 45;
 
     
     
 
     public static int LowerSecondsGenPlanet = 2; // нижняя граница в секундах в промежутке генерирования планет
-    public static int UpperSecondsGenPlanet = 6; // верхняя граница в секундах в промежутке генерирования планет
+    public static int UpperSecondsGenPlanet = 8; // верхняя граница в секундах в промежутке генерирования планет
 
-    public static int DistanceToGenerateObjects = 180;
+    public static int DistanceToGenerateObjects = 250;
 
     public static float TrailDisapearTime = 1f;
 

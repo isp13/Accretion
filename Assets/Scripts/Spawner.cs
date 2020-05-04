@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (genType == "AsteroidONLY" && asteroidsCount <= 30 )
+        if (genType == "AsteroidONLY" && asteroidsCount <= 20 )
         {
             asteroidsCount += 1;
             
@@ -42,6 +42,17 @@ public class Spawner : MonoBehaviour
         
     }
 
+    /*
+     * If probabilityPower is above 1, lower values will be more common than higher values. If it's between 0 to 1, higher values will be more common than lower values. If it's 1, the results will be in a general randomness.
+     */
+    private int GetRandomNumber(int max, int min, double probabilityPower = 2)
+    {
+        var randomizer = new System.Random();
+        var randomDouble = randomizer.NextDouble();
+
+        var result = System.Math.Floor(min + (max + 1 - min) * (System.Math.Pow(randomDouble, probabilityPower)));
+        return (int)result;
+    }
 
     /// <summary>
     /// берем вектор-направление игрока и спавним в том направлении
@@ -51,8 +62,13 @@ public class Spawner : MonoBehaviour
         
         Vector3 vectorToSpawn = player.GetComponent<GravitationalBody>().GetMovementVector().normalized + (rnd.Next(0,2) == 1 ? -1: 1) *  new Vector3(rnd.Next(), rnd.Next(), 0).normalized / 2;
 
+
+        
+
         string[] objectsToSpawn = (Constants.LegalToSpawn[player.GetComponent<GravitationalBody>().name]);
-        string objectToSpawn = objectsToSpawn[rnd.Next(0, objectsToSpawn.Length)];
+        int index = GetRandomNumber(objectsToSpawn.Length - 1, 0, 2);
+        //string objectToSpawn = objectsToSpawn[rnd.Next(0, objectsToSpawn.Length)];
+        string objectToSpawn = objectsToSpawn[index];
         if (System.Math.Pow(vectorToSpawn.x - player.transform.position.x, 2) + System.Math.Pow(vectorToSpawn.y - player.transform.position.y, 2) >= System.Math.Pow(Constants.DistanceToGenerateObjects, 2))
         {
             switch (objectToSpawn)
