@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using cakeslice;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -185,12 +186,15 @@ public class Spawner : MonoBehaviour
 
     void SpawnPlanet(Vector3 vc)
     {
+        
         Object planetPrefab = prefabs.planets[rnd.Next(0, prefabs.planets.Length)] as GameObject;
 
         var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(planetPrefab, Pos, this.transform.rotation) as GameObject;
         newplanet.tag = "Planet";
         newplanet.AddComponent<GravitationalBody>();
+        var g = newplanet.AddComponent<Outline>();
+        Debug.Log(g);
         newplanet.GetComponent<GravitationalBody>().name = "Planet";
 
         newplanet.GetComponent<GravitationalBody>().StartingMass = Constants.PlanetsStartingMass + 3;

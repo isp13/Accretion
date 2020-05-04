@@ -8,6 +8,7 @@ public class OrbitCatcher : MonoBehaviour
     // How long the player needs to stay at location
     public float timerCountDown = 5.0f;
 
+    GravitationalBody player;
 
     void FixedUpdate()
     {
@@ -20,6 +21,11 @@ public class OrbitCatcher : MonoBehaviour
                 timerCountDown = 0;
             }
         }
+    }
+
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<GravitationalBody>();
     }
 
     // Start the collision timer when player enters
@@ -42,6 +48,8 @@ public class OrbitCatcher : MonoBehaviour
                 other.GetComponent<GravitationalBody>().target = this.transform;
                 other.GetComponent<GravitationalBody>().onOrbit = true;
 
+                player.OrbitBodies.Add(other.gameObject);
+
                 other.GetComponent<TrailRenderer>().enabled = false;
                 timerCountDown = 5;
             }
@@ -55,6 +63,7 @@ public class OrbitCatcher : MonoBehaviour
         {
             Debug.Log("object Exited");
             isPlayerColliding = false;
+            player.OrbitBodies.Remove(other.gameObject);
             other.GetComponent<GravitationalBody>().onOrbit = false;
         }
     }
