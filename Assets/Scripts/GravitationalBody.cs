@@ -212,6 +212,12 @@ public class GravitationalBody : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        if (this.tag == "Player")
+            GameObject.Find("GameEnding").GetComponent<GameDeath>().Show_Panel();
+    }
+
 
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -279,6 +285,7 @@ public class GravitationalBody : MonoBehaviour
             if (this.tag == "Player")
             {
                 this.startingMass += 1;
+                
                 Destroy(coll.gameObject);
 
                 if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
