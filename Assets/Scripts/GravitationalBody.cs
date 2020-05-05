@@ -49,6 +49,9 @@ public class GravitationalBody : MonoBehaviour
 
     private System.DateTime lastTimeDownGrade;
 
+    private bool FirstAsteroidToBeHit = false;
+    private bool FirstTransformationIntoDwarfPlanet = false;
+    
     void Start()
     {
         lastTimeDownGrade = System.DateTime.Now;
@@ -344,6 +347,13 @@ public class GravitationalBody : MonoBehaviour
         {
             if (this.tag == "Player")
             {
+
+                if (FirstAsteroidToBeHit == false)
+                {
+                    FirstAsteroidToBeHit = true;
+                    StartCoroutine(GameObject.Find("TextTyper").GetComponent<TextTyper>().TypeText("Congrats. Now gain 10 mass to transform into dwarf planet."));
+                }
+
                 this.startingMass += 1;
                 
                 Destroy(coll.gameObject);
@@ -552,6 +562,11 @@ public class GravitationalBody : MonoBehaviour
 
         if (this.tag == "Player")
         {
+            if (FirstTransformationIntoDwarfPlanet == false)
+            {
+                FirstTransformationIntoDwarfPlanet = true;
+                StartCoroutine(GameObject.Find("TextTyper").GetComponent<TextTyper>().TypeText("GJ. You are big, but not big enough to continue smashing everything ", "Now try to catch asteroid on orbit."));
+            }
             Constants.PlayersNextObject = "Planet";
             GameObject.Find("Main Camera").GetComponent<CameraScript>().SmoothChangeOrthographicSize(Constants.PlanetMainCameraDistance);
         }

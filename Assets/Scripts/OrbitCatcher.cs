@@ -22,7 +22,7 @@ public class OrbitCatcher : MonoBehaviour
             }
         }
     }
-
+    private bool FirstOrbitObject = false;
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<GravitationalBody>();
@@ -52,6 +52,12 @@ public class OrbitCatcher : MonoBehaviour
 
                 other.GetComponent<TrailRenderer>().enabled = false;
                 timerCountDown = 5;
+
+                if (FirstOrbitObject == false && player.GetComponent<GravitationalBody>().name != "Asteroid")
+                {
+                    FirstOrbitObject = true;
+                    StartCoroutine(GameObject.Find("TextTyper").GetComponent<TextTyper>().TypeText("Now tap on yourself. You will 'eat' it & gain mass", "if you are big enough-smash into objects, otherwise catch them on orbit"));
+                }
             }
 
         }
@@ -61,6 +67,7 @@ public class OrbitCatcher : MonoBehaviour
     {
         if (other.gameObject.tag != "Player")
         {
+            timerCountDown = 5;
             Debug.Log("object Exited");
             isPlayerColliding = false;
             player.OrbitBodies.Remove(other.gameObject);

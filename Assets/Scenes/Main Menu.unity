@@ -177,7 +177,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 41
     m_FontStyle: 0
     m_BestFit: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GUIDE
+  m_Text: Guide
 --- !u!222 &60055964
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -540,6 +540,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adbafec9bf4892d44b3594c1e5d65537, type: 3}
+--- !u!84 &89836231
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  serializedVersion: 3
+  m_Width: 1894
+  m_Height: 991
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthFormat: 1
+  m_ColorFormat: 8
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &170918560
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,41 +737,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170918560}
   m_CullTransparentMesh: 0
---- !u!84 &271934802
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  serializedVersion: 3
-  m_Width: 1894
-  m_Height: 991
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthFormat: 1
-  m_ColorFormat: 8
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1001 &297930776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1151,7 +1151,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 1
@@ -1222,13 +1222,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8627451}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 39
     m_FontStyle: 0
     m_BestFit: 0
@@ -1241,8 +1241,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\nTry to find 'mass'  by catching other objects on your orbit if you are
-    not too big for them. Otherwise, just swallow it. \n\n\nBigger you become, bigger
-    objects you will find. Be careful. they can be dangerous.\n"
+    not too big for them. Otherwise, just swallow it. \n\n\nas you bacome bigger,
+    you will find bigger objects as well.\n\nBe careful. they can be dangerous.\n"
 --- !u!222 &469448467
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1833,7 +1833,7 @@ PrefabInstance:
     - target: {fileID: 8962427309141365596, guid: 6cec6815ff3e3ec4aa4b98b6abb1eec1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.72
+      value: -7.48
       objectReference: {fileID: 0}
     - target: {fileID: 8962427309141365596, guid: 6cec6815ff3e3ec4aa4b98b6abb1eec1,
         type: 3}
@@ -1843,7 +1843,7 @@ PrefabInstance:
     - target: {fileID: 8962427309141365596, guid: 6cec6815ff3e3ec4aa4b98b6abb1eec1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.57
+      value: -1.69
       objectReference: {fileID: 0}
     - target: {fileID: 8962427309141365596, guid: 6cec6815ff3e3ec4aa4b98b6abb1eec1,
         type: 3}
@@ -1902,41 +1902,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cec6815ff3e3ec4aa4b98b6abb1eec1, type: 3}
---- !u!84 &652454308
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  serializedVersion: 3
-  m_Width: 1894
-  m_Height: 991
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthFormat: 1
-  m_ColorFormat: 8
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &697719502 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6414095112311763630, guid: adbafec9bf4892d44b3594c1e5d65537,
@@ -2078,13 +2043,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8627451}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 39
     m_FontStyle: 0
     m_BestFit: 0
@@ -2096,8 +2061,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\n\nFinal iT project. The first year of HSE university.\n\n\nSPECIAL THANKS:\n\n-One
-    Potato Kingdom\r for \"Stylized Planet-Pack\"\n\n-Works For Fun\r for \"Mobile
+  m_Text: "\n\nFinal iT project. The first year of HSE university.\n\nSPECIAL THANKS:\n\n-One
+    Potato Kingdom\r for \"Stylized Planet-Pack\"\n-Works For Fun\r for \"Mobile
     Astre Pack vol. 1\"\n\n\n\n"
 --- !u!222 &799625601
 CanvasRenderer:
@@ -2449,8 +2414,8 @@ MonoBehaviour:
   sourceCamera: {fileID: 850141173}
   outlineCamera: {fileID: 1284766318}
   outlineShaderMaterial: {fileID: 0}
-  renderTexture: {fileID: 271934802}
-  extraRenderTexture: {fileID: 652454308}
+  renderTexture: {fileID: 1062310870}
+  extraRenderTexture: {fileID: 89836231}
 --- !u!114 &850141176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2646,6 +2611,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be4a99999efd804fa653fa8ccf195c1, type: 3}
+--- !u!84 &1062310870
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  serializedVersion: 3
+  m_Width: 1894
+  m_Height: 991
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthFormat: 1
+  m_ColorFormat: 8
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1001 &1089974265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3131,13 +3131,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.64705884}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 132
     m_FontStyle: 0
     m_BestFit: 1
@@ -3214,7 +3214,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 1
@@ -3403,7 +3403,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 0
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 271934802}
+  m_TargetTexture: {fileID: 1062310870}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -3567,7 +3567,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 1
@@ -3808,7 +3808,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 41
     m_FontStyle: 0
     m_BestFit: 0
@@ -4427,7 +4427,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 41
     m_FontStyle: 0
     m_BestFit: 0
@@ -4593,13 +4593,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8627451}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b60351fc2e7710d428a0bda7adda0f0e, type: 3}
+    m_Font: {fileID: 12800000, guid: ef767d54f3d7cc74ab2cff9314fca319, type: 3}
     m_FontSize: 39
     m_FontStyle: 0
     m_BestFit: 0
@@ -4869,7 +4869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.1764706}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
