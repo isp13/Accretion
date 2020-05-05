@@ -274,11 +274,20 @@ public class GravitationalBody : MonoBehaviour
     {
         if (coll.gameObject.tag == "destroyer")
             return;
-        Debug.Log("OnCollisionEnter2D");
+
+        if (this.name == "BlackHole")
+        {
+            Destroy(coll.gameObject);
+            this.StartingMass += 5;
+
+            if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
+            {
+                if (this.tag == "Player")
+                    GameObject.Find("GameEnding").GetComponent<GameDeath>().Show_Panel();
+            }
+        }
 
 
-        Debug.Log(coll.gameObject.name);
-        Debug.Log(this.gameObject.name);
         // если наш объект больше другого на две позиции - увеличение массы возможно даже врезавшись. 
         if (Constants.HierarchyDict[name] > Constants.HierarchyDict[coll.gameObject.GetComponent<GravitationalBody>().name] + 1)
         {
@@ -454,7 +463,7 @@ public class GravitationalBody : MonoBehaviour
 
     public void DownGrade_Retransform_Object()
     {
-        float saveMass = this.StartingMass;
+        float saveMass = Constants.HierarchyMinMass[this.name];
         int nextRank = Constants.HierarchyDict[name] - 1;
         this.name = Constants.HierarchyDict.FirstOrDefault(x => x.Value == nextRank).Key;
         if (this.tag != "Player")

@@ -32,13 +32,18 @@ public class Spawner : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (genType == "AsteroidONLY" && asteroidsCount <= 20 )
+        if (genType == "AsteroidONLY" && asteroidsCount <= 12 )
         {
             asteroidsCount += 1;
             
             Vector3 vectorToSpawn = player.GetComponent<GravitationalBody>().GetMovementVector().normalized + (rnd.Next(0, 2) == 1 ? -1 : 1) * new Vector3(rnd.Next(), rnd.Next(), 0).normalized / 2;
 
             SpawnAsteroid(vectorToSpawn);
+            //SpawnDwarfStar(vectorToSpawn);
+            //SpawnGiantStar(vectorToSpawn);
+            //SpawnNeutronStar(vectorToSpawn);
+            //SpawnBlackHole(vectorToSpawn);
+            //SpawnStar(vectorToSpawn);
         }
         
     }
@@ -206,7 +211,7 @@ public class Spawner : MonoBehaviour
 
     void SpawnDwarfStar(Vector3 vc)
     {
-        Object dwarfStarsPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+        Object dwarfStarsPrefab = prefabs.stars[0] as GameObject;
 
         var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(dwarfStarsPrefab, Pos, this.transform.rotation) as GameObject;
@@ -223,7 +228,7 @@ public class Spawner : MonoBehaviour
 
     void SpawnStar(Vector3 vc)
     {
-        Object StarsPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+        Object StarsPrefab = prefabs.stars[rnd.Next(1, 3)] as GameObject;
 
         var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(StarsPrefab, Pos, this.transform.rotation) as GameObject;
@@ -240,7 +245,7 @@ public class Spawner : MonoBehaviour
 
     void SpawnGiantStar(Vector3 vc)
     {
-        Object giantStarsPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+        Object giantStarsPrefab = prefabs.stars[3] as GameObject;
 
         var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(giantStarsPrefab, Pos, this.transform.rotation) as GameObject;
@@ -257,7 +262,7 @@ public class Spawner : MonoBehaviour
 
     void SpawnNeutronStar(Vector3 vc)
     {
-        Object neutronStarsPrefab = prefabs.stars[rnd.Next(0, prefabs.stars.Length)] as GameObject;
+        Object neutronStarsPrefab = prefabs.stars[4] as GameObject;
 
         var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(neutronStarsPrefab, Pos, this.transform.rotation) as GameObject;
@@ -274,7 +279,7 @@ public class Spawner : MonoBehaviour
 
     void SpawnBlackHole(Vector3 vc)
     {
-        Object blackholePrefab = prefabs.BlackHole[rnd.Next(0, prefabs.BlackHole.Length)] as GameObject;
+        Object blackholePrefab = prefabs.BlackHole[0] as GameObject;
 
         var Pos = player.GetComponent<Transform>().position + vc * Constants.DistanceToGenerateObjects;
         var newplanet = Instantiate(blackholePrefab, Pos, this.transform.rotation) as GameObject;
