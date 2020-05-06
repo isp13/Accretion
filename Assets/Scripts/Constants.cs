@@ -8,8 +8,12 @@ public static class Constants
 
     public static Dictionary<string, int> HierarchyDict = new Dictionary<string, int> { 
         { "Asteroid" , 0}, { "DwarfPlanet", 1 }, { "Planet", 2 }, { "DwarfStar", 3 },
-        { "Star", 4 }, { "GiantStar", 5 }, {"NeutronStar", 6 }, {"BlackHole", 6 } };
+        { "Star", 4 }, { "GiantStar", 5 }, {"NeutronStar", 6 }, {"BlackHole", 7 } };
 
+
+    public static Dictionary<string, int> GrowCoefDict = new Dictionary<string, int> {
+        { "Asteroid" , 1}, { "DwarfPlanet", 2 }, { "Planet", 3 }, { "DwarfStar", 4 },
+        { "Star", 4 }, { "GiantStar", 5 }, {"NeutronStar", 15 }, {"BlackHole", 50 } };
 
     public static string PlayersNextObject = "Dwarf Planet";
     

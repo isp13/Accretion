@@ -230,7 +230,7 @@ public class GravitationalBody : MonoBehaviour
         {
             Debug.Log("DESROYING");
             // увеличиваем массу центра системы из космических объектов кода съели
-            GameObject.Find("Player").GetComponent<GravitationalBody>().StartingMass += 1;
+            GameObject.Find("Player").GetComponent<GravitationalBody>().StartingMass += CalculateMassGrow(this.name);
             Debug.Log("Destroying by click");
             Destroy(this.gameObject);
 
@@ -281,13 +281,14 @@ public class GravitationalBody : MonoBehaviour
         if (this.name == "BlackHole")
         {
             Destroy(coll.gameObject);
-            this.StartingMass += 5;
+            this.StartingMass += CalculateMassGrow();
 
             if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
             {
                 if (this.tag == "Player")
                     GameObject.Find("GameEnding").GetComponent<GameDeath>().Show_Panel();
             }
+            return;
         }
 
 
@@ -296,7 +297,7 @@ public class GravitationalBody : MonoBehaviour
         {
             Debug.Log("Destroying object because a bigger one was near");
             Destroy(coll.gameObject);
-            this.StartingMass += 1;
+            this.StartingMass += CalculateMassGrow();
 
             if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
             {
@@ -321,7 +322,7 @@ public class GravitationalBody : MonoBehaviour
             Debug.Log("Destroying object because a bigger one was near");
             //GameObject.Find("OnlyAsteroidsGenerator").GetComponent<Spawner>().SpawnAsteroidConstantPosition(this.transform.position + new Vector3((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble()));
             Destroy(coll.gameObject);
-            this.StartingMass -= 1;
+            this.StartingMass -=  CalculateMassGrow();
 
             if (StartingMass < Constants.HierarchyMinMass[name]) // если объект потерял массу и стал весить меньше обычного
             {
@@ -354,8 +355,8 @@ public class GravitationalBody : MonoBehaviour
                     StartCoroutine(GameObject.Find("TextTyper").GetComponent<TextTyper>().TypeText("Congrats. Now gain 10 mass to transform into dwarf planet."));
                 }
 
-                this.startingMass += 1;
-                
+                this.startingMass += CalculateMassGrow();
+
                 Destroy(coll.gameObject);
 
                 if (StartingMass / Constants.HierarchyMaxMass[name] >= 1f)
@@ -403,6 +404,15 @@ public class GravitationalBody : MonoBehaviour
         }
     }
 
+    public int CalculateMassGrow()
+    {
+        return Constants.GrowCoefDict[this.name];
+    }
+
+    public int CalculateMassGrow(string nm)
+    {
+        return Constants.GrowCoefDict[nm];
+    }
 
     public string ShareObjectData(string option)
     {
