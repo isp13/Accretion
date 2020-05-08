@@ -119,7 +119,7 @@ public class GravitationalBody : MonoBehaviour
 
         rb.gravityScale = 0f;
         rb.drag = 0f;
-        rb.angularDrag = 0f;
+        rb.angularDrag = 2f; // останавливает со временем вращение объекта
         
         rb.mass = StartingMass;
         rb.velocity = initialVelocity;
@@ -478,7 +478,8 @@ public class GravitationalBody : MonoBehaviour
         else
             Debug.Log("tag error");
 
-        this.StartingMass = (int)(saveMass * 1.1f);
+        this.StartingMass = (int)(saveMass * 1.1f) + 1;
+        
     }
 
     public void DownGrade_Retransform_Object()
@@ -512,6 +513,7 @@ public class GravitationalBody : MonoBehaviour
             Debug.Log("tag error");
 
         this.StartingMass = (int)(saveMass * 0.8f);
+        
     }
 
     public void Retransform_Asteroid()

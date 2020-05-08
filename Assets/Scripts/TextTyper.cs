@@ -28,7 +28,7 @@ public class TextTyper : MonoBehaviour
 
         for (int i = 0; i < secondText.Length; i++)
         {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.04f);
             uiText.text = secondText.Substring(0, i + 1);
         }
 
@@ -43,7 +43,7 @@ public class TextTyper : MonoBehaviour
         uiText.text = "";
         for (int i = 0; i < text.Length; i++)
         {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.04f);
             uiText.text = text.Substring(0, i + 1);
         }
 
@@ -56,7 +56,7 @@ public class TextTyper : MonoBehaviour
         uiText.text = "";
         for (int i = 0; i < text.Length; i++)
         {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.04f);
             uiText.text = text.Substring(0, i + 1);
         }
 
@@ -66,7 +66,7 @@ public class TextTyper : MonoBehaviour
         
         for (int i = 0; i < text2.Length; i++)
         {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.04f);
             uiText.text = text2.Substring(0, i + 1);
         }
 
