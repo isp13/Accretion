@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         startGameButton.onClick.AddListener(StartGame);
+        GameObject.Find("Music").GetComponent<AudioManager>().PlayMusic();
     }
 
 
