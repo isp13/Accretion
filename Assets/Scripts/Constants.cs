@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class Constants
 {
+    /// GAME SETTINGS
+    public static int vSyncCount = 0;
+    public static int targetFrameRate = 300;
+    ///
     public static float GravityPower = 140; // default is 27 // ,было 70 // но тк изменилась гравитация, поднялв  два раза
 
     public static Dictionary<string, int> HierarchyDict = new Dictionary<string, int> { 
