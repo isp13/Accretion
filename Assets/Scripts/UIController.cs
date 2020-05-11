@@ -11,8 +11,8 @@ public class UIController : MonoBehaviour
     public Text Coords;
     public Text nextObject;
     public GameObject player;
-
     private GravitationalBody scr;
+
     // Start is called before the first frame update
     void Start()
     {
