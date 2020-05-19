@@ -16,12 +16,6 @@ public class Events : MonoBehaviour
         lastTimeMovingEventFetched = System.DateTime.Now;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public static void InvokeNotifyMovement()
     {
         int tmp = Random.Range(Constants.LowerSecondsGenPlanet, Constants.UpperSecondsGenPlanet);
