@@ -1,5 +1,5 @@
 # Accretion
-##2D Space Arcade. first-year coursework. HSE.
+## 2D Space Arcade. first-year coursework. HSE.
 
 <img align="right" width="200" height="200" src="https://sun9-2.userapi.com/9My18e9VAhKU90r9OtCDD0kiVht8DOvTpppsNA/vGwE7_ZnVnI.jpg">
 Accretion is an open-world, sandbox game set in an infinite abstract universe.<br/>
