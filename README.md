@@ -8,9 +8,9 @@ Crash into space objets or "swallow" them. Make your own way to rule the univers
 * C# 7.3
 	
 ### It has a target deployment of:
-* iOS 11.0+
+* [iOS 11.0+](https://github.com/isp13/Accretion/releases/tag/v1)
 * [Android 4.4+](https://play.google.com/store/apps/details?id=com.sinapsis.Space)
-* Windows 7+
+* [Windows 7 SP1+](https://github.com/isp13/Accretion/releases/tag/v1)
 	
 ### It was created using:
 * Unity 2019.3.1f
