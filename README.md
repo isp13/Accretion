@@ -11,7 +11,7 @@ Crash into space objets or "swallow" them. Make your own way to rule the univers
 	
 ### It has a target deployment of:
 * iOS 11.0+
-* Android 4.4+
+* [Android 4.4+](https://play.google.com/store/apps/details?id=com.sinapsis.Space)
 * Windows 7+
 #### This is a universal app, but it is primarily designed for iPhone.
 	
