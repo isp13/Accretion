@@ -36,8 +36,8 @@ Crash into space objets or "swallow" them. Make your own way to rule the univers
     <td><img src="gifs/planet1.gif" width="100" height="60"></td>
     <td><img src="gifs/sun1.gif" width="100" height="60"></td>
     <td><img src="gifs/sun2.gif" width="100" height="60"></td>
-    <td><img src="gifs/sun3.gif" width="100" height="60"></td>
     <td><img src="gifs/sun5.gif" width="100" height="60"></td>
+    <td><img src="gifs/sun3.gif" width="100" height="60"></td>
     <td><img src="gifs/blackhole.gif" width="100" height="60"></td>
   </tr>
  </table>
