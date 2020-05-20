@@ -7,14 +7,14 @@ Play as an asteroid, dwarf planet, planet, different types of stars, or black ho
 Crash into space objets or "swallow" them. Make your own way to rule the universe. 
 	
 ### This app is written in:
-* C#
+* C# 7.3
 	
 ### It has a target deployment of:
 * iOS 11.0+
 * [Android 4.4+](https://play.google.com/store/apps/details?id=com.sinapsis.Space)
 * Windows 7+
-#### This is a universal app, but it is primarily designed for iPhone.
 	
 ### It was created using:
-* Unity build 2019
+* Unity 2019.3.1f
+* Blender 2.82a
 	
